@@ -3,7 +3,7 @@
     --background-overlay: rgba(0, 0, 0, 0.336);
     --navbar-height: 60px;
     --font-family: "Michroma", sans-serif;
-    --banner-height: 80vh;
+    --banner-height: 100vh;
 }
 
 * {
@@ -14,7 +14,9 @@
 
 body {
     font-family: var(--font-family);
+    font-size: 16px;
 }
+
 
 /*        Estilos del Navbar        */
 .navbar {
@@ -55,7 +57,7 @@ body {
     background: none;
     text-transform: uppercase;
     transition-timing-function: cubic-bezier(0.25, 0.8, 0.25, 1);
-    transition-duration: 400ms;
+    transition-duration: 300ms;
     transition-property: color;
 }
 
@@ -85,35 +87,43 @@ body {
     transition-property: width, left;
 }
 
+.button-nav:focus {
+    outline: 2px #ff17ec;
+}
+
 /*         Estilos del Banner         */
 
 .banner {
-    background-image: url("../img/cabecera/freepik-untitled-project-20241007092647iPnc.png");
-    background-size: cover;
-    background-repeat: no-repeat;
-    height: var(--banner-height);
-    width: 100%;
-    position: relative;
     display: flex;
     flex-direction: column;
-    justify-content: flex-start;
+    background: rgb(59,0,66);
+    background: linear-gradient(135deg, rgba(59,0,66,1) 18%, rgba(20,0,22,1) 77%);
+    background-size: cover;
+    background-repeat: no-repeat;
+    width: 100%;
     padding-top: 80px;
 }
 
-.banner::before {
-    content: "";
-    position: absolute;
-    top: 0;
-    left: 0;
-    width: 100%;
-    height: 100%;
-    background-color: var(--background-overlay);
-}
+
 
 .banner-content {
-    margin: 40px;
+    position: relative;
+    display: flex;
+    align-items: center;
+    justify-content: space-around;
     color: white;
-    max-width: 900px;
+    z-index: 2;
+}
+
+.contenedor-imagen-banner img{
+    width: 80%;
+    height: 100%;
+}
+
+.contenedor-texto-banner{
+    padding: 10px;
+    width: 40%;
+    height: 100%;
 }
 
 .banner h1 {
@@ -160,17 +170,12 @@ p {
 
 /*     Efecto background del banner    */
 
-.area {
-    width: 100%;
-
-}
-
 .circles {
-    position: absolute;
+    position: fixed;
     top: 0;
     left: 0;
     width: 100%;
-    height: 80%;
+    height: 100%;
     overflow: hidden;
 }
 
@@ -307,13 +312,14 @@ p {
 .card-social {
     width: fit-content;
     height: fit-content;
-    background-color: rgba(238, 238, 238, 0);
     display: flex;
+    border-radius: 20px;
     align-items: center;
     justify-content: center;
     padding: 25px 25px;
     gap: 20px;
     box-shadow: 15px 0px 20px rgba(10, 10, 10, 0.911);
+    z-index: 5;
 }
 
 .card-social > div{
@@ -430,19 +436,145 @@ p {
     border-radius: 30px;
     background: #050505;
     text-align: center;
+    transition: 0.5s;
+    z-index: 2;
 }
 
 .card-skill:hover {
     transform: scale(1.2);
+    transition: 1s;
 }
 
 .card-skill svg {
     width: 40px;
 }
 
+/*   Certificados - Carrousel   */
+
+#certificados{
+    text-align: center;
+    color: white;
+    background-color: #0e0113;
+    background-image: linear-gradient(160deg, #0e0113 0%, #590565 100%);
+    padding: 50px;
+}
+
+.certificados-container{
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    justify-content: center;
+    overflow: hidden;
+}
+
+.carrousel{
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    overflow: hidden;
+    width: 100%;
+    height: 100%;
+}
+
+.imagenes{
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    justify-content: end;
+}
+
+.img-certificado{
+    box-shadow: 0px 4px 10px 0px rgb(0, 0, 0, 0.85);
+    height: 100%;
+    width: 100%;
+    border-radius: 15px;
+    margin: 5px;
+    object-fit: cover;
+    filter: saturate(175%);
+}
 
 
+.card-certificado {
+    margin: 50px;
+    width: 400px;
+    height: 300px;
+    perspective: 1000px;
+}
 
+.card-inner {
+    width: 100%;
+    height: 100%;
+    position: relative;
+    transform-style: preserve-3d;
+    transition: transform 0.999s;
+}
+
+.card-certificado:hover .card-inner {
+    transform: rotateY(180deg);
+}
+
+.card-front,
+.card-back {
+    position: absolute;
+    width: 100%;
+    height: 100%;
+    backface-visibility: hidden;
+}
+
+.card-front {
+    color: #fff;
+    display: flex;
+    align-items: center;
+    border-radius: 10px;
+    justify-content: center;
+    transform: rotateY(0deg);
+}
+
+.card-back {
+    background-color: #250024;
+    color: #fff;
+    display: flex;
+    flex-direction: column;
+    gap: 10px;
+    align-items: center;
+    border: 3px solid #f336ea;
+    border-radius: 10px;
+    justify-content: center;
+    font-size: 24px;
+    transform: rotateY(180deg);
+    padding: 15px;
+}
+
+.atras-lg{
+    z-index: 2;
+}
+
+.adelante-lg{
+    z-index: 2;
+}
+
+.puntos{
+    display: flex;
+    align-items: center;
+    justify-content: center;
+}
+
+.puntos p{
+    font-size: 80px;
+    font-weight: 300;
+    margin-top: -100px;
+}
+
+.puntos .bold{
+    font-weight: 500;
+    margin-left: 7px;
+    margin-right: 7px;
+    color: #5E17EB;
+}
+
+.navegacion-carrousel-sm{
+    display: none;
+}
 
 /*    Media query - SM     */
 
@@ -462,6 +594,116 @@ p {
     }
 
     .banner-content {
+        text-align: center;
         margin: 30px 10px;
+    }
+}
+
+
+.menu-toggle {
+    display: none; /* Oculto por defecto */
+    flex-direction: column;
+    cursor: pointer;
+}
+
+.bar {
+    height: 3px;
+    width: 25px;
+    background-color: var(--primary-color);
+    margin: 3px 0;
+    transition: 0.3s;
+}
+
+
+
+
+@media (max-width: 768px) {
+    .menu-toggle {
+        display: flex; /* Muestra el botón en pantallas pequeñas */
+    }
+
+    .navbar-menu {
+        display: none; /* Oculta el menú por defecto */
+        flex-direction: column;
+        width: 100%;
+        background-color: rgb(76, 3, 85); /* Color de fondo para el menú */
+        position: absolute;
+        top: var(--navbar-height); /* Abajo del navbar */
+        left: 0;
+        z-index: 9;
+    }
+
+    .navbar-menu.show {
+        display: flex; /* Muestra el menú cuando se activa */
+        justify-content: center;
+    }
+
+    .navbar ul {
+        display:none;
+        list-style: none;
+    }
+
+    .navbar ul li {
+        margin: 10px 0; /* Espaciado en el menú vertical */
+        text-align: center; /* Centrar texto en menú vertical */
+    }
+}
+
+
+
+/* Smartphones (pantallas de 480px o menos) */
+@media (max-width: 480px) {
+
+    .banner-content{
+        flex-direction: column;
+        margin: 0;
+    }
+
+    .contenedor-texto-banner{
+        width: 100%;
+    }
+
+    .contenedor-imagen-banner{
+        width: 72%;
+    }
+
+    #certificados{
+        padding: 10px;
+    }
+
+    .card-certificado{
+        margin: 10px;
+        width: 350px;
+        height: 250px;
+    }
+
+    .card-back{
+        font-size: 16px;
+        padding: 5px;
+    }
+
+    .card-back p{
+        font-size: 16px;
+    }
+    .adelante-lg, .atras-lg {
+        display: none; 
+    }
+
+    .navegacion-carrousel-sm{
+        display: flex; /* Mostrar en pantallas pequeñas */
+        justify-content: center; /* Centrar las flechas horizontalmente */
+        margin-top: 20px; /* Espacio entre la imagen y las flechas */
+        z-index: 2;
+    }
+
+    .navegacion-carrousel-sm .atras, .adelante {
+        cursor: pointer; /* Para que parezca que son clickeables */
+        margin: 0 10px; /* Espacio entre las flechas */
+        z-index: 2;
+    }
+
+    .puntos p {
+        font-size: 40px;
+        margin-top: 0px;
     }
 }
