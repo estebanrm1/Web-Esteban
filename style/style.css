@@ -96,8 +96,8 @@ body {
 .banner {
     display: flex;
     flex-direction: column;
-    background: rgb(59,0,66);
-    background: linear-gradient(135deg, rgba(59,0,66,1) 18%, rgba(20,0,22,1) 77%);
+    background: rgb(59, 0, 66);
+    background: linear-gradient(135deg, rgba(59, 0, 66, 1) 18%, rgba(20, 0, 22, 1) 77%);
     background-size: cover;
     background-repeat: no-repeat;
     width: 100%;
@@ -113,16 +113,18 @@ body {
     justify-content: space-around;
     color: white;
     z-index: 2;
+    padding: 40px;
 }
 
-.contenedor-imagen-banner img{
-    width: 80%;
+.contenedor-imagen-banner img {
+    width: 100%;
     height: 100%;
 }
 
-.contenedor-texto-banner{
+
+.contenedor-texto-banner {
     padding: 10px;
-    width: 40%;
+    width: 50%;
     height: 100%;
 }
 
@@ -322,14 +324,14 @@ p {
     z-index: 5;
 }
 
-.card-social > div{
+.card-social>div {
     display: flex;
     flex-direction: column;
     justify-content: space-around;
     align-items: center;
 }
 
-.card-social > div > p{
+.card-social>div>p {
     font-size: x-small;
 }
 
@@ -451,7 +453,7 @@ p {
 
 /*   Certificados - Carrousel   */
 
-#certificados{
+#certificados {
     text-align: center;
     color: white;
     background-color: #0e0113;
@@ -459,7 +461,7 @@ p {
     padding: 50px;
 }
 
-.certificados-container{
+.certificados-container {
     display: flex;
     flex-direction: column;
     align-items: center;
@@ -467,7 +469,7 @@ p {
     overflow: hidden;
 }
 
-.carrousel{
+.carrousel {
     display: flex;
     align-items: center;
     justify-content: center;
@@ -476,14 +478,14 @@ p {
     height: 100%;
 }
 
-.imagenes{
+.imagenes {
     display: flex;
     flex-direction: column;
     align-items: center;
     justify-content: end;
 }
 
-.img-certificado{
+.img-certificado {
     box-shadow: 0px 4px 10px 0px rgb(0, 0, 0, 0.85);
     height: 100%;
     width: 100%;
@@ -545,43 +547,41 @@ p {
     padding: 15px;
 }
 
-.atras-lg{
+.atras-lg {
     z-index: 2;
 }
 
-.adelante-lg{
+.adelante-lg {
     z-index: 2;
 }
 
-.puntos{
+.puntos {
     display: flex;
     align-items: center;
     justify-content: center;
 }
 
-.puntos p{
+.puntos p {
     font-size: 80px;
     font-weight: 300;
     margin-top: -100px;
 }
 
-.puntos .bold{
+.puntos .bold {
     font-weight: 500;
     margin-left: 7px;
     margin-right: 7px;
     color: #5E17EB;
 }
 
-.navegacion-carrousel-sm{
+.navegacion-carrousel-sm {
     display: none;
 }
 
-/*    Media query - SM     */
 
+/* Media query - SM (hasta 600px) */
 @media (max-width: 600px) {
     .banner {
-        background-image: none;
-        background: rgb(59, 0, 66);
         background: linear-gradient(0deg, rgba(59, 0, 66, 1) 28%, rgba(0, 0, 0, 1) 77%);
     }
 
@@ -595,13 +595,73 @@ p {
 
     .banner-content {
         text-align: center;
-        margin: 30px 10px;
+        flex-direction: column;
+        margin: 0;
+        padding-bottom: 0;
+    }
+
+    .contenedor-texto-banner,
+    .contenedor-imagen-banner {
+        width: 100%;
+    }
+
+    .contenedor-imagen-banner {
+        width: 72%;
+    }
+
+    .card-skill {
+        width: 120px;
+        padding: 15px;
+    }
+
+    .contenedor-skills {
+        margin: 0;
+        padding: 0;
+    }
+
+    #certificados {
+        padding: 10px;
+    }
+
+    .card-certificado {
+        margin: 10px;
+        width: 350px;
+        height: 250px;
+    }
+
+    .card-back,
+    .card-back p {
+        font-size: 16px;
+        padding: 5px;
+    }
+
+    .adelante-lg,
+    .atras-lg {
+        display: none;
+    }
+
+    .navegacion-carrousel-sm {
+        display: flex;
+        justify-content: center;
+        margin-top: 20px;
+        z-index: 2;
+    }
+
+    .navegacion-carrousel-sm .atras,
+    .adelante {
+        cursor: pointer;
+        margin: 0 10px;
+        z-index: 2;
+    }
+
+    .puntos p {
+        font-size: 40px;
+        margin-top: 0;
     }
 }
 
-
 .menu-toggle {
-    display: none; /* Oculto por defecto */
+    display: none;
     flex-direction: column;
     cursor: pointer;
 }
@@ -614,96 +674,47 @@ p {
     transition: 0.3s;
 }
 
-
-
-
+/* Media query - hasta 768px */
 @media (max-width: 768px) {
     .menu-toggle {
-        display: flex; /* Muestra el botón en pantallas pequeñas */
+        display: flex;
     }
 
     .navbar-menu {
-        display: none; /* Oculta el menú por defecto */
+        display: none;
         flex-direction: column;
         width: 100%;
-        background-color: rgb(76, 3, 85); /* Color de fondo para el menú */
+        background-color: rgb(76, 3, 85);
         position: absolute;
-        top: var(--navbar-height); /* Abajo del navbar */
+        top: var(--navbar-height);
         left: 0;
         z-index: 9;
     }
 
     .navbar-menu.show {
-        display: flex; /* Muestra el menú cuando se activa */
+        display: flex;
         justify-content: center;
     }
 
     .navbar ul {
-        display:none;
+        display: none;
         list-style: none;
     }
 
     .navbar ul li {
-        margin: 10px 0; /* Espaciado en el menú vertical */
-        text-align: center; /* Centrar texto en menú vertical */
+        margin: 10px 0;
+        text-align: center;
+    }
+
+    .contenedor-imagen-banner img,
+    .contenedor-texto-banner {
+        width: 100%;
     }
 }
 
-
-
-/* Smartphones (pantallas de 480px o menos) */
-@media (max-width: 480px) {
-
-    .banner-content{
-        flex-direction: column;
-        margin: 0;
-    }
-
-    .contenedor-texto-banner{
-        width: 100%;
-    }
-
-    .contenedor-imagen-banner{
-        width: 72%;
-    }
-
-    #certificados{
-        padding: 10px;
-    }
-
-    .card-certificado{
-        margin: 10px;
-        width: 350px;
-        height: 250px;
-    }
-
-    .card-back{
-        font-size: 16px;
-        padding: 5px;
-    }
-
-    .card-back p{
-        font-size: 16px;
-    }
-    .adelante-lg, .atras-lg {
-        display: none; 
-    }
-
-    .navegacion-carrousel-sm{
-        display: flex; /* Mostrar en pantallas pequeñas */
-        justify-content: center; /* Centrar las flechas horizontalmente */
-        margin-top: 20px; /* Espacio entre la imagen y las flechas */
-        z-index: 2;
-    }
-
-    .navegacion-carrousel-sm .atras, .adelante {
-        cursor: pointer; /* Para que parezca que son clickeables */
-        margin: 0 10px; /* Espacio entre las flechas */
-        z-index: 2;
-    }
-
-    .puntos p {
-        font-size: 40px;
-        margin-top: 0px;
+/* Pantallas ultra anchas (mín. 1920px) */
+@media (min-width: 912px) {
+    .contenedor-imagen-banner {
+        width: 25%;
     }
 }
