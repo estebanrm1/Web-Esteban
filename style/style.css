@@ -719,6 +719,11 @@ p {
         width: 72%;
     }
 
+    #skills p, #certificados p{
+        margin: 0;
+        padding-bottom: 20px;
+    }
+
     .card-skill {
         width: 120px;
         padding: 15px;
@@ -770,7 +775,7 @@ p {
     }
 
     .card-proyecto-descripcion {
-        font-size: 13px;
+        font-size: 15px;
     }
 }
 
