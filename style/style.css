@@ -687,7 +687,10 @@ p {
     color: white;
 }
 
-
+.enlace{
+    color: white;
+    text-decoration: none;
+}
 
 /* Media query - SM (hasta 600px) */
 @media (max-width: 600px) {
