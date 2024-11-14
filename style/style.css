@@ -600,7 +600,7 @@ p {
     background-color: #0e0113;
 }
 
-.proyectos-container{
+.proyectos-container {
     display: flex;
     justify-content: space-around;
     flex-wrap: wrap;
@@ -624,12 +624,13 @@ p {
     transition: all 0.6s cubic-bezier(0.175, 0.885, 0.32, 1.275);
 }
 
-.card-proyecto-background{
+.card-proyecto-background {
     height: 250px;
-    background-size: contain; /* La imagen cubrirá toda la card sin distorsión */
+    background-size: contain;
+    /* La imagen cubrirá toda la card sin distorsión */
     background-position: center;
     background-repeat: no-repeat;
-    filter: brightness(0.5); 
+    filter: brightness(0.5);
 }
 
 .card-proyecto svg {
@@ -687,14 +688,14 @@ p {
     color: white;
 }
 
-.enlace{
+.enlace {
     color: white;
     text-decoration: none;
 }
 
 /*           Contacto           */
 
-#contacto{
+#contacto {
     text-align: center;
     color: white;
     background-color: #0e0113;
@@ -707,12 +708,12 @@ p {
 
 /*      Contacto-Formulario      */
 
-/* From Uiverse.io by gharsh11032000 */ 
+/* From Uiverse.io by gharsh11032000 */
 .form-container {
     z-index: 2;
     width: 500px;
     background: linear-gradient(#1e0430, #490166) padding-box,
-                linear-gradient(145deg, transparent 5%,#e81cff, #40c9ff) border-box;
+        linear-gradient(145deg, transparent 5%, #e81cff, #40c9ff) border-box;
     border: 2px solid transparent;
     padding: 32px 24px;
     margin: 30px 0px;
@@ -724,33 +725,33 @@ p {
     gap: 20px;
     box-sizing: border-box;
     border-radius: 16px;
-  }
-  
-  .form-container button:active {
+}
+
+.form-container button:active {
     scale: 0.95;
-  }
-  
-  .form-container .form {
+}
+
+.form-container .form {
     display: flex;
     flex-direction: column;
     gap: 20px;
-  }
-  
-  .form-container .form-group {
+}
+
+.form-container .form-group {
     display: flex;
     flex-direction: column;
     gap: 2px;
-  }
-  
-  .form-container .form-group label {
+}
+
+.form-container .form-group label {
     display: block;
     margin-bottom: 5px;
     color: #fffefe;
     font-weight: 400;
     font-size: 14px;
-  }
-  
-  .form-container .form-group input {
+}
+
+.form-container .form-group input {
     width: 100%;
     padding: 12px 16px;
     border-radius: 8px;
@@ -758,9 +759,9 @@ p {
     font-family: inherit;
     background-color: transparent;
     border: 1px solid #777777;
-  }
-  
-  .form-container .form-group textarea {
+}
+
+.form-container .form-group textarea {
     width: 100%;
     padding: 12px 16px;
     border-radius: 8px;
@@ -770,25 +771,25 @@ p {
     border: 1px solid #777777;
     background-color: transparent;
     font-family: inherit;
-  }
-  
-  .form-container .form-group input::placeholder {
+}
+
+.form-container .form-group input::placeholder {
     opacity: 0.5;
-  }
-  
-  .form-container .form-group input:focus {
+}
+
+.form-container .form-group input:focus {
     transition: 1s;
     outline: none;
     border-color: #e81cff;
-  }
-  
-  .form-container .form-group textarea:focus {
+}
+
+.form-container .form-group textarea:focus {
     transition: 1s;
     outline: none;
     border-color: #e81cff;
-  }
-  
-  .form-container .form-submit-btn {
+}
+
+.form-container .form-submit-btn {
     display: flex;
     align-items: flex-start;
     justify-content: center;
@@ -804,41 +805,50 @@ p {
     margin-top: 8px;
     cursor: pointer;
     border-radius: 6px;
-  }
-  
-  .form-container .form-submit-btn:hover {
+}
+
+.form-container .form-submit-btn:hover {
     transition: 0.7s;
     background-color: #72087e;
     border-color: #e81cff;
     color: white;
-  }
+}
 
 
 /*        Mensaje enviado / No enviado          */
 
 .hidden {
     display: none;
-  }
-  
-  #message {
+}
+
+#message {
     margin-top: 10px;
     padding: 10px;
     border-radius: 5px;
     font-weight: bold;
     text-align: center;
-  }
-  
-  #message.success {
+}
+
+#message.success {
     background-color: #d4edda;
     color: #155724;
     border: 1px solid #c3e6cb;
-  }
-  
-  #message.error {
+}
+
+#message.error {
     background-color: #f8d7da;
     color: #721c24;
     border: 1px solid #f5c6cb;
-  }
+}
+
+
+.footer{
+    padding: 80px 10px;
+    background-color: #1b012e;
+    display: flex;
+    justify-content: center;
+    align-items: center;
+}
 
 
 /* Media query - SM (hasta 600px) */
@@ -871,7 +881,8 @@ p {
         width: 72%;
     }
 
-    #skills p, #certificados p{
+    #skills p,
+    #certificados p {
         margin: 0;
         padding-bottom: 20px;
     }
@@ -886,7 +897,7 @@ p {
         padding: 0;
     }
 
-    .card-proyecto-boton{
+    .card-proyecto-boton {
         padding: 5px;
     }
 
@@ -934,7 +945,7 @@ p {
         font-size: 15px;
     }
 
-    .form-container{
+    .form-container {
         width: 100%;
     }
 }
