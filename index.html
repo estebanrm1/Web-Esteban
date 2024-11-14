@@ -310,7 +310,6 @@
             <h3>Proyectos / Experiencia</h3>
             <p>En esta sección, presento una selección de mis proyectos más destacados. Cada uno de ellos muestra mi capacidad para aplicar mis habilidades técnicas y creativas en el desarrollo de soluciones web efectivas. Desde páginas de presentación hasta aplicaciones interactivas, cada proyecto refleja mi pasión por la programación y el diseño, así como mi deseo de superar las expectativas de mis clientes.</p>
             <div class="proyectos-container">
-
                 <div class="card-proyecto">
                         <img class="card-proyecto-background" src="./img/menu/proyectos/cv_chef.jpg" alt="Portfolio Chef">
                         <p class="card-proyecto-titulo">Portfolio Chef</p>
@@ -347,11 +346,37 @@
                     </div>
                 </div>
             </div>
-
         </section>
-        
+        <section id="contacto">
+            <h3>Contacto</h3>
+            <p>¿Tienes alguna pregunta o proyecto en mente? No dudes en contactarme.</p>
+            <div class="form-container">
+                <form class="form" id="contactForm">
+                    <div class="form-group">
+                        <label for="name">Tu nombre</label>
+                        <input type="text" id="name" name="user_name" required autocomplete="name">
+                    </div>
+                    <div class="form-group">
+                        <label for="email">Tu Correo electrónico</label>
+                        <input type="text" id="email" name="user_email" required autocomplete="email">
+                    </div>
+                    <div class="form-group">
+                        <label for="subjet">Asunto</label>
+                        <input type="text" id="subjet" name="user_subjet" required autocomplete="subjet">
+                    </div>
+                    <div class="form-group">
+                        <label for="textarea">Escribe tu mensaje aquí</label>
+                        <textarea name="user_message" id="textarea" rows="10" cols="50" required=""></textarea>
+                    </div>
+                    <button class="form-submit-btn" type="submit">Enviar</button>
+                </form>
+                <div id="message" class="hidden"></div>
+            </div>
+            <p>Gracias por tu interés en contactar conmigo. ¡Estoy emocionado por conocerte!</p>
+        </section>
     </main>
     <footer></footer>
+    <script type="text/javascript" src="https://cdn.emailjs.com/dist/email.min.js"></script>
     <script src="app.js"></script>
 </body>
 
