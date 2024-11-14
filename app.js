@@ -1,8 +1,8 @@
-document.addEventListener('DOMContentLoaded', function() {
+document.addEventListener('DOMContentLoaded', function () {
     const menuToggle = document.querySelector('.menu-toggle');
     const navbarMenu = document.querySelector('.navbar-menu');
 
-    menuToggle.addEventListener('click', function() {
+    menuToggle.addEventListener('click', function () {
         navbarMenu.classList.toggle('show');
     });
 });
@@ -44,24 +44,24 @@ function actualizarCarrusel() {
     posicionCarrousel();
 }
 
-atras.addEventListener('click', function() {
+atras.addEventListener('click', function () {
     actual = (actual - 1 + imagenes.length) % imagenes.length;  // Movimiento circular
     actualizarCarrusel();
 });
 
-adelante.addEventListener('click', function() {
+adelante.addEventListener('click', function () {
     actual = (actual + 1) % imagenes.length;  // Movimiento circular
     actualizarCarrusel();
 });
 
 //Funciones para las flechas en dispositivos chicos
 
-atrasSm.addEventListener('click', function() {
+atrasSm.addEventListener('click', function () {
     actual = (actual - 1 + imagenes.length) % imagenes.length;  // Movimiento circular
     actualizarCarrusel();
 });
 
-adelanteSm.addEventListener('click', function() {
+adelanteSm.addEventListener('click', function () {
     actual = (actual + 1) % imagenes.length;  // Movimiento circular
     actualizarCarrusel();
 });
@@ -77,5 +77,28 @@ function posicionCarrousel() {
     }
 }
 
-// Inicializamos el carrusel al cargar la página
 actualizarCarrusel();
+
+
+//Emailjs para el formulario de contacto 
+
+emailjs.init("2olDYxDDBxZ5wQt6e");
+
+document.getElementById("contactForm").addEventListener("submit", function (event) {
+    event.preventDefault();
+
+    const messageDiv = document.getElementById("message");
+
+    emailjs.sendForm("service_kc6u0yd", "template_zcw2qg8", this)
+        .then(function () {
+
+            document.getElementById("contactForm").reset();
+            messageDiv.textContent = "¡Mensaje enviado correctamente! Gracias por contactarme.";
+            messageDiv.className = "success";
+            messageDiv.classList.remove("hidden");
+        }, function (error) {
+            messageDiv.textContent = "Hubo un error al enviar el mensaje. Por favor, intenta nuevamente.";
+            messageDiv.className = "error";
+            messageDiv.classList.remove("hidden");
+        });
+});
