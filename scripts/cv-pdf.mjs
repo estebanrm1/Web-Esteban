@@ -39,11 +39,11 @@ try {
     .k{font-weight:600;letter-spacing:.1em;text-transform:uppercase;color:#6a2a85;font-size:20px;display:flex;gap:14px;align-items:center}
     .k:before{content:'';width:36px;height:2px;background:currentColor}
     h1{font-family:B;font-size:92px;line-height:.95;letter-spacing:-.04em;margin-top:26px;font-weight:700}
-    h2{font-family:B;font-size:36px;color:#6a2a85;font-weight:600;margin-top:18px;letter-spacing:-.02em}
+    h2{font-family:B;font-size:34px;color:#6a2a85;font-weight:600;margin-top:18px;letter-spacing:-.02em}
     p{font-size:24px;color:#4a4352;margin-top:26px;line-height:1.4}
     img{width:360px;height:450px;object-fit:cover;object-position:50% 20%;border-radius:28px;box-shadow:24px 24px 0 -1px #f5f1ea,24px 24px 0 0 #6a2a85}
-  </style></head><body><div><div class="k">Portfolio</div><h1>Esteban<br>Molina</h1><h2>Desarrollador Full Stack MERN</h2>
-  <p>Frontend &amp; UI · React · Node.js · MongoDB</p></div><img src="${photo}"></body></html>`);
+  </style></head><body><div><div class="k">Portfolio</div><h1>Esteban<br>Molina</h1><h2>eCommerce Analyst &amp; VTEX Developer</h2>
+  <p>VTEX IO · Integraciones API · Automatización con IA</p></div><img src="${photo}"></body></html>`);
   await og.evaluate(() => document.fonts.ready);
   await og.screenshot({ path: 'public/og.png' });
   console.log('✓ public/og.png');

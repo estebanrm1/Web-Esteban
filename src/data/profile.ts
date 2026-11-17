@@ -1,6 +1,6 @@
 /**
  * Fuente única de contenido del sitio y del CV.
- * Todo lo que aparece aquí proviene del sitio original o de los certificados.
+ * Fuentes: CV 2026 de Esteban, certificados oficiales y el sitio original.
  * Editá este archivo para actualizar el portfolio: los componentes no contienen texto de perfil.
  */
 import type { ImageMetadata } from 'astro';
@@ -11,66 +11,148 @@ import portfolioShot from '../assets/projects/este-portfolio.png';
 import certRolling from '../assets/certificates/rolling-code-fullstack.png';
 import certProgWeb from '../assets/certificates/programacion-web.png';
 import certArgProg from '../assets/certificates/argentina-programa.png';
+import certOne from '../assets/certificates/oracle-one-programa.png';
+import certOneIA from '../assets/certificates/one-inmersion-agentes-ia.png';
 
 export const site = {
   url: 'https://esteban-molina-cv.netlify.app',
   lang: 'es-AR',
-  title: 'Esteban Molina — Desarrollador Full Stack MERN · Frontend & UI',
+  title: 'Esteban Molina — eCommerce Analyst & VTEX Developer',
   description:
-    'Esteban Molina, desarrollador Full Stack MERN (React, Node.js, MongoDB) con foco en frontend y UI. Proyectos publicados, certificaciones y CV descargable.',
+    'Esteban Molina: eCommerce Analyst y VTEX Developer en Tucumán. Integraciones VTEX IO, automatización con IA y desarrollo web full stack. Experiencia, proyectos y CV.',
   repo: 'https://github.com/estebanrm1/Web-Esteban',
 };
 
 export const person = {
   name: 'Esteban Molina',
   fullName: 'Esteban Rodrigo Molina',
-  role: 'Desarrollador Full Stack MERN',
-  focus: 'Frontend & UI',
-  location: 'Argentina',
-  email: 'solsel90@gmail.com',
+  role: 'eCommerce Analyst & VTEX Developer',
+  focus: 'Integraciones · Automatización · IA aplicada',
+  location: 'Tucumán, Argentina',
+  modality: 'Remoto · Híbrido · Abierto a reubicación',
+  email: 'emolinatuc@gmail.com',
   phoneDisplay: '+54 381 215-7708',
   whatsapp: 'https://wa.me/543812157708',
-  linkedin: 'https://www.linkedin.com/in/esteban-molina-front-end/',
+  linkedin: 'https://www.linkedin.com/in/esteban-molina-dev/',
+  linkedinHandle: 'in/esteban-molina-dev',
   github: 'https://github.com/estebanrm1',
   cvPdf: '/cv/esteban-molina-cv.pdf',
+  currentEmployer: 'Yuhmak S.A.',
 };
 
 /** Propuesta de valor (hero). */
 export const pitch = {
-  headline: 'Construyo interfaces web claras, rápidas y pensadas para quien las usa.',
+  headline: 'Traduzco necesidades de negocio en soluciones eCommerce concretas.',
   summary:
-    'Programador web Full Stack MERN certificado por Rolling Code School, con formación front-end avalada por la Secretaría de Innovación Pública. Antes del código pasé más de 10 años en gastronomía, en atención al cliente y como encargado: esa mirada centrada en las personas es lo que traigo a cada proyecto.',
+    'Perfil híbrido técnico-operativo: en Yuhmak soy el referente técnico interno de VTEX IO. Desarrollo integraciones API, diseño herramientas web a medida y automatizo procesos con IA, reduciendo costos de desarrollo externo. Formación full stack MERN y más de 10 años gestionando operaciones.',
 };
 
 /** Datos de un vistazo para reclutadores. */
 export const highlights = [
-  { value: 'MERN', label: 'MongoDB · Express · React · Node.js' },
-  { value: '+10 años', label: 'de atención al cliente y gestión como encargado' },
-  { value: '3', label: 'certificaciones en programación y desarrollo web' },
-  { value: '4', label: 'proyectos publicados y en línea' },
+  { value: 'VTEX IO', label: 'referente técnico interno en Yuhmak S.A.' },
+  { value: '+10 años', label: 'de experiencia en gestión de operaciones y equipos' },
+  { value: '11', label: 'sucursales en el esquema multidepósito que diseñé' },
+  { value: '327 h', label: 'de formación en Oracle Next Education' },
 ];
 
 export const about = {
   paragraphs: [
-    'La programación transformó mi vida laboral y personal. Durante más de 10 años trabajé en el rubro gastronómico, en atención al cliente y como encargado. Ahí desarrollé habilidades clave en comunicación y resolución de problemas, hasta que descubrí el desarrollo web y encontré mi verdadera pasión.',
-    'Me considero una persona creativa y detallista, con un fuerte foco en la interfaz de usuario: busco que las aplicaciones no solo funcionen bien, sino que ofrezcan una experiencia visual atractiva y amigable. Me encanta resolver problemas y enfrentar nuevos desafíos, y eso me impulsa a seguir aprendiendo.',
-    'Me entusiasma colaborar en proyectos que marquen la diferencia y aportar al desarrollo de soluciones efectivas y dinámicas.',
+    'Soy analista de eCommerce y desarrollador VTEX. Me especializo en integrar plataformas, automatizar procesos y traducir necesidades de negocio en soluciones concretas: desde scripts de migración de catálogo hasta aplicaciones internas que reemplazan flujos manuales.',
+    'Llegué a la tecnología desde la operación: durante años gestioné equipos y operaciones diarias en gastronomía. Esa experiencia me da algo que valoro mucho en un equipo de producto: entender el negocio desde adentro, priorizar y comunicar con claridad entre áreas técnicas y no técnicas.',
+    'Hoy combino formación full stack MERN con un uso intensivo de inteligencia artificial aplicada a flujos de trabajo reales, y sigo formándome en el programa Oracle Next Education.',
   ],
   strengths: [
     {
-      title: 'Interfaz primero',
-      text: 'Foco en UI y experiencia de usuario: jerarquía, detalle visual y usabilidad en cada pantalla.',
+      title: 'eCommerce y VTEX',
+      text: 'VTEX IO, API, catálogo, promociones, checkout y medios de pago. Gestión técnica diaria con el partner oficial.',
     },
     {
-      title: 'Full Stack MERN',
-      text: 'Formación completa en MongoDB, Express, React y Node.js para entender el producto de punta a punta.',
+      title: 'Integración y automatización',
+      text: 'Integraciones API, scripts en Python y herramientas web a medida que eliminan procesos manuales propensos a errores.',
     },
     {
-      title: 'Oficio con personas',
-      text: '+10 años de atención al público y como encargado: comunicación clara y resolución de problemas en tiempo real.',
+      title: 'IA aplicada al negocio',
+      text: 'Soluciones con Claude API y LLMs para automatizar tareas operativas, con criterio de negocio y de operación.',
     },
   ],
 };
+
+export type Role = {
+  title: string;
+  company: string;
+  period: string;
+  start: string;
+  end?: string;
+  summary?: string;
+  points: string[];
+};
+
+export const experience: Role[] = [
+  {
+    title: 'Analista de Operaciones eCommerce',
+    company: 'Yuhmak S.A.',
+    period: '2024 — Presente',
+    start: '2024',
+    points: [
+      'Referente técnico interno de VTEX IO: gestiono la relación diaria con el partner oficial, evalúo propuestas técnicas y ejecuto desarrollos directos, reduciendo horas facturadas a terceros.',
+      'Scripts en Python para migración masiva de catálogo vía VTEX API: árbol de categorías, marcas y mapeo de taxonomía de Google, automatizando operaciones antes manuales o tercerizadas.',
+      'Diseñé y desarrollé el Hot Sale Command Center (Next.js 15 + TypeScript + Supabase), que centralizó la gestión del evento comercial más importante del año y reemplazó un flujo manual en múltiples hojas de cálculo.',
+      'Arquitecturé el esquema multidepósito de 11 sucursales para la nueva cuenta VTEX de la división Hogar, documentando la lógica de inventario y envío para la migración.',
+      'Investigué e integré procesadores de pago (Payway, Getnet, MODO/Fiserv): evaluación técnica, compatibilidad con VTEX y recomendación de rutas de implementación.',
+      'Implementé soluciones con Claude API (Anthropic) para automatizar tareas operativas, como la detección de nombres de locales en reseñas y la generación de respuestas.',
+      'Diagnostiqué y resolví un bug crítico de rendering en el storefront (conflicto FedCM/Chrome) que afectaba el inicio de sesión con Google.',
+    ],
+  },
+  {
+    title: 'Desarrollador Web (Freelance)',
+    company: 'A.M Soluciones Web',
+    period: '2023 — Presente',
+    start: '2023',
+    points: [
+      'Desarrollo de sitios web a medida con HTML, CSS, JavaScript y React para clientes de distintos rubros.',
+      'Consultoría técnica para pequeñas empresas en plataformas digitales y optimización de su presencia online.',
+    ],
+  },
+  {
+    title: 'Encargado de Operaciones',
+    company: 'Porter Brew House',
+    period: '2019 — 2023',
+    start: '2019',
+    end: '2023',
+    points: [
+      'Gestión integral de equipos: planificación, capacitación y control de las operaciones diarias.',
+      'Optimización de procesos internos que mejoraron los tiempos de servicio y la satisfacción del cliente.',
+    ],
+  },
+];
+
+/** Casos destacados (proyectos internos, sin demo pública). */
+export const caseStudies = [
+  {
+    title: 'Hot Sale Command Center',
+    context: 'Aplicación web interna · Yuhmak S.A.',
+    problem: 'La gestión del Hot Sale dependía de un flujo manual repartido en múltiples hojas de cálculo.',
+    solution:
+      'Aplicación web que centraliza la operación del evento integrando datos de SAP Business One y VTEX API en tiempo real.',
+    stack: ['Next.js 15', 'TypeScript', 'Tailwind', 'Supabase', 'Drizzle ORM', 'TanStack Query'],
+  },
+  {
+    title: 'Migración Yuhmak Hogar a VTEX',
+    context: 'Liderazgo técnico · Yuhmak S.A.',
+    problem: 'Separar la división Hogar en su propia cuenta VTEX sin perder catálogo ni lógica de inventario.',
+    solution:
+      'Análisis de storefront, configuración de catálogo vía API y diseño de un esquema multidepósito para 11 sucursales.',
+    stack: ['VTEX API', 'Python', 'Inventario multidepósito'],
+  },
+  {
+    title: 'Automatizador de Condiciones Comerciales',
+    context: 'Herramienta interna · VTEX',
+    problem: 'Cada mes, condiciones comerciales y reglas de pago se cargaban a mano: un proceso lento y propenso a errores.',
+    solution:
+      'App en React que procesa las planillas mensuales y configura automáticamente condiciones comerciales y reglas de pago en VTEX.',
+    stack: ['React', 'SheetJS', 'VTEX API'],
+  },
+];
 
 export type Project = {
   slug: string;
@@ -84,13 +166,13 @@ export type Project = {
   imageAlt: string;
 };
 
+/** Sitios publicados (freelance y personales). */
 export const projects: Project[] = [
   {
     slug: 'am-soluciones-web',
     title: 'A.M Soluciones Web',
     kind: 'Emprendimiento propio',
-    description:
-      'Sitio de mi emprendimiento de soluciones web. Desarrollado con React, Bootstrap y múltiples librerías para ofrecer una experiencia moderna y funcional.',
+    description: 'Sitio de mi emprendimiento de desarrollo web, construido con React, Bootstrap y múltiples librerías.',
     stack: ['React', 'Bootstrap', 'JavaScript'],
     demo: 'https://am-soluciones-web.netlify.app/',
     image: amShot,
@@ -100,8 +182,7 @@ export const projects: Project[] = [
     slug: 'rincon-gourmet',
     title: 'Rincón Gourmet',
     kind: 'Sitio para restaurante',
-    description:
-      'Sitio para un restaurante con un diseño elegante para mostrar el menú y mejorar la experiencia del cliente: carta, reservas y contacto, horarios y búsqueda de personal.',
+    description: 'Sitio para un restaurante: carta, reservas y contacto, horarios y búsqueda de personal, con un diseño elegante.',
     stack: ['HTML', 'CSS', 'Bootstrap', 'JavaScript'],
     demo: 'https://demo-pagina-web.netlify.app/',
     image: rinconShot,
@@ -111,9 +192,8 @@ export const projects: Project[] = [
     slug: 'portfolio-chef',
     title: 'Portfolio Chef',
     kind: 'CV online',
-    description:
-      'CV online para un chef, optimizado para SEO, con formulario de contacto funcional mediante EmailJS y un diseño atractivo y funcional.',
-    stack: ['HTML', 'CSS', 'Bootstrap', 'JavaScript', 'EmailJS', 'SEO'],
+    description: 'CV online para un chef, optimizado para SEO y con formulario de contacto funcional mediante EmailJS.',
+    stack: ['HTML', 'CSS', 'Bootstrap', 'JavaScript', 'EmailJS'],
     demo: 'https://am-solucionesweb.github.io/portfoliocv/',
     image: chefShot,
     imageAlt: 'Captura del Portfolio Chef: portada con un plato de sushi y botón «Contáctame».',
@@ -122,9 +202,8 @@ export const projects: Project[] = [
     slug: 'este-portfolio',
     title: 'Este portfolio',
     kind: 'Sitio personal · código abierto',
-    description:
-      'Mi portfolio personal, reconstruido con Astro como sitio estático: accesible, rápido, con SEO técnico, modo oscuro y CV descargable.',
-    stack: ['Astro', 'TypeScript', 'CSS', 'EmailJS'],
+    description: 'Sitio estático con Astro: accesible (WCAG 2.2 AA), rápido, con SEO técnico, modo oscuro y CV descargable.',
+    stack: ['Astro', 'TypeScript', 'CSS'],
     demo: 'https://esteban-molina-cv.netlify.app/',
     repo: 'https://github.com/estebanrm1/Web-Esteban',
     image: portfolioShot,
@@ -133,13 +212,25 @@ export const projects: Project[] = [
 ];
 
 export const skills = [
-  { group: 'Frontend', items: ['HTML5', 'CSS3', 'JavaScript', 'React', 'Bootstrap'] },
-  { group: 'Backend y datos', items: ['Node.js', 'Express', 'MongoDB'] },
-  {
-    group: 'Producto y entrega',
-    items: ['UI / UX', 'Diseño responsive', 'SEO on-page', 'EmailJS', 'Git y GitHub', 'Netlify'],
-  },
+  { group: 'eCommerce / VTEX', items: ['VTEX IO', 'VTEX API', 'Admin', 'Site Editor', 'Catálogo', 'Promociones', 'Checkout', 'Payment Gateway'] },
+  { group: 'Front-end', items: ['JavaScript ES6+', 'TypeScript', 'React', 'Next.js', 'HTML5', 'CSS3', 'Tailwind'] },
+  { group: 'Back-end y datos', items: ['Node.js', 'Express', 'Python', 'PostgreSQL', 'REST APIs'] },
+  { group: 'IA y automatización', items: ['Claude API', 'Integración de LLMs', 'Prompt Engineering'] },
+  { group: 'DevOps y herramientas', items: ['Git', 'Docker', 'Postman', 'Supabase', 'Drizzle ORM', 'Figma'] },
+  { group: 'Gestión', items: ['Trello', 'Slack', 'MS Teams', 'Google Drive', 'Excel avanzado'] },
 ];
+
+export const languages = [
+  { name: 'Español', level: 'Nativo' },
+  { name: 'Inglés', level: 'Lectura técnica fluida: documentación, APIs y foros especializados' },
+];
+
+/** Formación en curso. */
+export const currentStudy = {
+  title: 'Business AI Builder',
+  program: 'Oracle Next Education (ONE) · Oracle + Alura Latam',
+  text: 'Fase práctica enfocada en aplicar inteligencia artificial a áreas de negocio: IA para Marketing, Ventas, Recursos Humanos y Finanzas. El objetivo es identificar problemas de negocio, elegir las herramientas de IA adecuadas y construir soluciones aplicables al día a día.',
+};
 
 export type Certificate = {
   title: string;
@@ -148,15 +239,33 @@ export type Certificate = {
   dateISO: string;
   detail: string;
   image: ImageMetadata;
+  verifyUrl?: string;
 };
 
 export const certificates: Certificate[] = [
   {
-    title: 'Fullstack Web Developer',
+    title: 'ONE | Inmersión: Agentes de IA para Negocios',
+    issuer: 'Oracle Next Education · Alura Latam',
+    date: 'Octubre 2026 · 4 h',
+    dateISO: '2026-10-12',
+    detail: 'Inmersión sobre agentes de inteligencia artificial aplicados a negocios.',
+    image: certOneIA,
+    verifyUrl: 'https://app.aluracursos.com/immersion/certificate/69e7b2d2-e261-4da9-9223-6d9f138a6376',
+  },
+  {
+    title: 'Programa Oracle Next Education (ONE)',
+    issuer: 'Oracle + Alura Latam',
+    date: 'Enero 2025 · 327 h',
+    dateISO: '2025-01-21',
+    detail: '6 formaciones: Principiante en Programación, Front End, React, Desarrollo Personal, Emprendimiento y Agilidad y Protagonismo Profesional.',
+    image: certOne,
+  },
+  {
+    title: 'Fullstack Web Developer (MERN)',
     issuer: 'Rolling Code School',
     date: 'Agosto 2023',
     dateISO: '2023-08-23',
-    detail: 'Desarrollo web full stack MERN: MongoDB, Express, React y Node.js.',
+    detail: 'Desarrollo web full stack: MongoDB, Express, React y Node.js.',
     image: certRolling,
   },
   {
@@ -164,7 +273,7 @@ export const certificates: Certificate[] = [
     issuer: 'Secretaría de Innovación Pública',
     date: 'Septiembre 2022 · 40 h',
     dateISO: '2022-09-20',
-    detail: 'Plataforma de Aprendizaje Virtual (Jefatura de Gabinete de Ministros). Enfoque front-end.',
+    detail: 'Plataforma de Aprendizaje Virtual (Jefatura de Gabinete de Ministros).',
     image: certProgWeb,
   },
   {
@@ -172,36 +281,7 @@ export const certificates: Certificate[] = [
     issuer: 'Ministerio de Desarrollo Productivo · CESSI',
     date: 'Abril 2022',
     dateISO: '2022-04-13',
-    detail: 'Primera etapa aprobada: fundamentos de programación y desarrollo web.',
+    detail: 'Fundamentos de programación (primera etapa).',
     image: certArgProg,
-  },
-];
-
-/** Trayectoria: del oficio a la tecnología. Solo hitos documentados. */
-export const journey = [
-  {
-    when: '+10 años',
-    title: 'Gastronomía — atención al cliente y encargado',
-    text: 'Trato directo con clientes, gestión y resolución de problemas en tiempo real.',
-  },
-  {
-    when: '2022',
-    title: 'Argentina Programa · Programación Web',
-    text: 'Formación inicial certificada: fundamentos de programación y desarrollo front-end.',
-  },
-  {
-    when: '2023',
-    title: 'Fullstack Web Developer — Rolling Code School',
-    text: 'Certificación full stack MERN: MongoDB, Express, React y Node.js.',
-  },
-  {
-    when: 'Emprendimiento',
-    title: 'A.M Soluciones Web',
-    text: 'Desarrollo de sitios web para clientes: gastronomía y perfiles profesionales.',
-  },
-  {
-    when: 'Formación',
-    title: 'Oracle Next Education (ONE) — Alura Latam',
-    text: 'Ampliando conocimientos en programación con inteligencia artificial.',
   },
 ];

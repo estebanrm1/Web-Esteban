@@ -1,6 +1,6 @@
 # Esteban Molina — Portfolio
 
-Sitio personal de **Esteban Molina**, desarrollador Full Stack MERN con foco en Frontend y UI.
+Sitio personal de **Esteban Molina**, eCommerce Analyst & VTEX Developer (integraciones, automatización e IA aplicada).
 En producción: https://esteban-molina-cv.netlify.app
 
 ## Stack
@@ -15,8 +15,8 @@ En producción: https://esteban-molina-cv.netlify.app
 
 ```
 src/
-  data/profile.ts      ← TODO el contenido (perfil, proyectos, skills, certificados). Editá acá.
-  components/          ← Header, Hero, About, Projects, Stack, Journey, Contact, Footer, Icon
+  data/profile.ts      ← TODO el contenido (perfil, experiencia, proyectos, skills, formación). Editá acá.
+  components/          ← Header, Hero, About, Experience, Projects, Stack, Education, Contact, Footer, Icon
   layouts/Base.astro   ← <head>, SEO, datos estructurados, tema
   pages/               ← index, cv (CV imprimible), 404
   styles/global.css    ← sistema de diseño

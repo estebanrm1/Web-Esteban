@@ -1,10 +1,10 @@
 ---
 import Base from '../layouts/Base.astro';
-import { person, pitch, about, projects, skills, certificates, site } from '../data/profile';
-const host = (u: string) => u.replace(/^https?:\/\//, '').replace(/\/$/, '');
+import { person, pitch, about, experience, caseStudies, skills, languages, certificates, currentStudy, site } from '../data/profile';
+const host = (u: string) => u.replace(/^https?:\/\/(www\.)?/, '').replace(/\/$/, '');
 ---
 
-<Base title="CV — Esteban Molina, Desarrollador Full Stack MERN" description={`Currículum de ${person.name}: ${person.role}. ${pitch.headline}`}>
+<Base title={`CV — ${person.name}, ${person.role}`} description={`Currículum de ${person.name}: ${person.role}. ${pitch.headline}`}>
   <nav class="toolbar" aria-label="Acciones del CV">
     <a href="/">← Volver al portfolio</a>
     <a class="btn btn--accent" href={person.cvPdf} download>Descargar PDF</a>
@@ -14,46 +14,52 @@ const host = (u: string) => u.replace(/^https?:\/\//, '').replace(/\/$/, '');
     <header class="cv-head">
       <div>
         <h1>{person.name}</h1>
-        <p class="cv-role">{person.role} · {person.focus}</p>
+        <p class="cv-role">{person.role}</p>
+        <p class="cv-focus">{person.focus}</p>
       </div>
       <ul class="cv-contact">
         <li><a href={`mailto:${person.email}`}>{person.email}</a></li>
         <li><a href={person.whatsapp}>{person.phoneDisplay}</a></li>
-        <li><a href={person.linkedin}>{host(person.linkedin).replace('www.', '')}</a></li>
-        <li><a href={person.github}>{host(person.github)}</a></li>
+        <li><a href={person.linkedin}>{host(person.linkedin)}</a></li>
         <li><a href={site.url}>{host(site.url)}</a></li>
         <li>{person.location}</li>
+        <li>{person.modality}</li>
       </ul>
     </header>
 
-    <section>
-      <h2>Perfil</h2>
-      <p>{pitch.summary}</p>
-      <p>{about.paragraphs[1]}</p>
-    </section>
-
     <div class="cols">
-      <div>
+      <div class="main">
         <section>
-          <h2>Proyectos</h2>
-          {projects.map((p) => (
+          <h2>Perfil profesional</h2>
+          <p>{pitch.summary}</p>
+        </section>
+
+        <section>
+          <h2>Experiencia laboral</h2>
+          {experience.map((r) => (
             <article class="item">
-              <h3>{p.title} <span>· {p.kind}</span></h3>
-              <p>{p.description}</p>
-              <p class="muted">{p.stack.join(' · ')} — <a href={p.demo}>{host(p.demo)}</a></p>
+              <div class="row">
+                <h3>{r.title} <span>· {r.company}</span></h3>
+                <p class="date">{r.period}</p>
+              </div>
+              <ul class="bullets">
+                {r.points.map((p) => <li>{p}</li>)}
+              </ul>
             </article>
           ))}
         </section>
 
         <section>
-          <h2>Experiencia previa</h2>
-          <article class="item">
-            <h3>Gastronomía <span>· +10 años</span></h3>
-            <p>Atención al cliente y encargado. Comunicación, gestión y resolución de problemas en tiempo real.</p>
-          </article>
+          <h2>Proyectos destacados</h2>
+          {caseStudies.map((c) => (
+            <article class="item">
+              <h3>{c.title}</h3>
+              <p>{c.solution}</p>
+              <p class="muted">{c.stack.join(' · ')}</p>
+            </article>
+          ))}
         </section>
       </div>
-
       <aside>
         <section>
           <h2>Habilidades</h2>
@@ -67,16 +73,26 @@ const host = (u: string) => u.replace(/^https?:\/\//, '').replace(/\/$/, '');
 
         <section>
           <h2>Formación</h2>
+          <div class="item">
+            <h3>{currentStudy.title} <span>· en curso</span></h3>
+            <p class="muted">{currentStudy.program}</p>
+          </div>
           {certificates.map((c) => (
             <div class="item">
               <h3>{c.title}</h3>
               <p class="muted">{c.issuer} · {c.date}</p>
             </div>
           ))}
-          <div class="item">
-            <h3>Oracle Next Education (ONE)</h3>
-            <p class="muted">Alura Latam · Programación con IA</p>
-          </div>
+        </section>
+
+        <section>
+          <h2>Idiomas</h2>
+          {languages.map((l) => (
+            <div class="item">
+              <h3>{l.name}</h3>
+              <p class="muted">{l.level}</p>
+            </div>
+          ))}
         </section>
       </aside>
     </div>
@@ -101,42 +117,46 @@ const host = (u: string) => u.replace(/^https?:\/\//, '').replace(/\/$/, '');
     --paper: #ffffff;
     --ink: #17131c;
     --ink-2: #3f3946;
-    --ink-3: #6b6372;
+    --ink-3: #635b6a;
     --line: #ddd5e3;
     --accent: #6a2a85;
     color: var(--ink);
     background: var(--paper);
     width: min(100% - 2rem, 210mm);
-    min-height: 297mm;
     margin: 0 auto 3rem;
-    padding: 14mm 15mm;
+    padding: 10mm 12mm;
     box-shadow: var(--shadow);
-    font-size: 10pt;
-    line-height: 1.5;
+    font-size: 8.7pt;
+    line-height: 1.4;
   }
   .cv-head {
     display: flex;
     justify-content: space-between;
     gap: 1.5rem;
-    padding-bottom: 6mm;
+    padding-bottom: 4mm;
     border-bottom: 2px solid var(--ink);
-    margin-bottom: 6mm;
+    margin-bottom: 2mm;
   }
   h1 {
-    font-size: 26pt;
+    font-size: 24pt;
     letter-spacing: -0.03em;
   }
   .cv-role {
     color: var(--accent);
-    font-weight: 600;
+    font-weight: 700;
     font-size: 12pt;
     margin-top: 1.5mm;
+  }
+  .cv-focus {
+    color: var(--ink-3);
+    font-size: 9pt;
+    margin-top: 0.5mm;
   }
   .cv-contact {
     list-style: none;
     padding: 0;
     text-align: right;
-    font-size: 8.8pt;
+    font-size: 8.4pt;
     color: var(--ink-2);
   }
   .cv-contact a {
@@ -144,32 +164,53 @@ const host = (u: string) => u.replace(/^https?:\/\//, '').replace(/\/$/, '');
     display: inline-block;
     min-height: 24px;
   }
+  @media print {
+    .cv-contact a {
+      min-height: 0;
+    }
+  }
   h2 {
-    font-size: 9pt;
+    font-size: 8.4pt;
     text-transform: uppercase;
     letter-spacing: 0.12em;
     color: var(--accent);
-    margin: 5mm 0 2.5mm;
+    margin: 3.5mm 0 1.6mm;
     font-family: var(--font-body);
     font-weight: 700;
-  }
-  section > p + p {
-    margin-top: 2mm;
   }
   section > p {
     color: var(--ink-2);
   }
+  /* Float en lugar de grid: Chrome puede partirlo entre páginas al imprimir */
   .cols {
-    display: grid;
-    grid-template-columns: 1.6fr 1fr;
-    gap: 8mm;
+    display: flow-root;
+  }
+  .cols > .main {
+    float: left;
+    width: 64%;
+  }
+  .cols > aside {
+    float: right;
+    width: 32%;
   }
   .item {
-    margin-bottom: 3.2mm;
+    margin-bottom: 2.2mm;
     break-inside: avoid;
   }
+  .row {
+    display: flex;
+    justify-content: space-between;
+    align-items: baseline;
+    gap: 1rem;
+  }
+  .date {
+    flex: none;
+    font-size: 8pt;
+    font-weight: 600;
+    color: var(--accent);
+  }
   h3 {
-    font-size: 10.5pt;
+    font-size: 9.6pt;
     letter-spacing: -0.01em;
   }
   h3 span {
@@ -180,9 +221,17 @@ const host = (u: string) => u.replace(/^https?:\/\//, '').replace(/\/$/, '');
   .item p {
     color: var(--ink-2);
   }
+  .bullets {
+    margin-top: 1mm;
+    padding-left: 3.5mm;
+    color: var(--ink-2);
+  }
+  .bullets li + li {
+    margin-top: 0.6mm;
+  }
   .muted {
     color: var(--ink-3) !important;
-    font-size: 8.8pt;
+    font-size: 8.2pt;
   }
   .cv a {
     color: inherit;
@@ -190,12 +239,16 @@ const host = (u: string) => u.replace(/^https?:\/\//, '').replace(/\/$/, '');
   @media (max-width: 700px) {
     .cv {
       padding: 1.5rem;
-      min-height: 0;
+      font-size: 0.95rem;
     }
-    .cv-head,
-    .cols {
+    .cv-head {
       display: grid;
       grid-template-columns: 1fr;
+    }
+    .cols > aside,
+    .cols > .main {
+      float: none;
+      width: auto;
     }
     .cv-contact {
       text-align: left;

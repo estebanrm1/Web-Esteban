@@ -1,7 +1,7 @@
 ---
 import { Picture } from 'astro:assets';
 import Icon from './Icon.astro';
-import portrait from '../assets/profile/esteban-molina.jpg';
+import portrait from '../assets/profile/esteban-molina-2026.jpg';
 import { person, pitch, highlights } from '../data/profile';
 ---
 
@@ -10,7 +10,7 @@ import { person, pitch, highlights } from '../data/profile';
     <div class="hero-copy">
       <p class="status" data-reveal>
         <span class="dot" aria-hidden="true"></span>
-        Abierto a oportunidades · {person.location}
+        {person.location} · {person.modality}
       </p>
 
       <h1 id="hero-title" class="title" data-reveal style="--d:1">
@@ -22,7 +22,7 @@ import { person, pitch, highlights } from '../data/profile';
       <p class="summary" data-reveal style="--d:3">{pitch.summary}</p>
 
       <div class="cta" data-reveal style="--d:4">
-        <a class="btn btn--accent" href="#proyectos">Ver proyectos <Icon name="arrow" /></a>
+        <a class="btn btn--accent" href="#experiencia">Ver experiencia <Icon name="arrow" /></a>
         <a class="btn btn--ghost" href={person.cvPdf} download><Icon name="download" /> Descargar CV</a>
         <a class="btn btn--ghost" href="#contacto">Contactar</a>
       </div>
@@ -47,8 +47,8 @@ import { person, pitch, highlights } from '../data/profile';
     <figure class="portrait" data-reveal style="--d:2">
       <Picture
         src={portrait}
-        alt="Retrato de Esteban Molina, de brazos cruzados con remera negra."
-        widths={[320, 480, 640, 860]}
+        alt="Retrato de Esteban Molina sonriendo, con un suéter mostaza."
+        widths={[240, 400, 500]}
         sizes="(max-width: 860px) 104px, 420px"
         formats={['avif', 'webp']}
         fallbackFormat="jpg"
@@ -57,8 +57,8 @@ import { person, pitch, highlights } from '../data/profile';
         quality={72}
       />
       <figcaption class="badge">
-        <span class="badge-k">Certificado</span>
-        <span class="badge-v">Fullstack Web Developer · Rolling Code School</span>
+        <span class="badge-k">Actualmente</span>
+        <span class="badge-v">Analista de Operaciones eCommerce · {person.currentEmployer}</span>
       </figcaption>
     </figure>
   </div>
@@ -153,6 +153,8 @@ import { person, pitch, highlights } from '../data/profile';
   }
   .focus {
     display: block;
+    margin-top: 0.15rem;
+    font-size: 0.72em;
     color: var(--ink-3);
   }
   .headline {
@@ -209,7 +211,7 @@ import { person, pitch, highlights } from '../data/profile';
     width: 100%;
     aspect-ratio: 4 / 5;
     object-fit: cover;
-    object-position: 50% 20%;
+    object-position: 50% 30%;
     border-radius: var(--radius-lg);
     box-shadow: var(--shadow);
     filter: saturate(0.92) contrast(1.02);

@@ -1,7 +1,7 @@
 ---
 import { Image, getImage } from 'astro:assets';
 import Icon from './Icon.astro';
-import { journey, certificates } from '../data/profile';
+import { currentStudy, certificates } from '../data/profile';
 
 // Versión grande optimizada para el visor (se carga solo al abrirlo).
 const full = await Promise.all(
@@ -9,25 +9,26 @@ const full = await Promise.all(
 );
 ---
 
-<section id="trayectoria" class="section" aria-labelledby="trayectoria-title">
+<section id="formacion" class="section" aria-labelledby="formacion-title">
   <div class="container">
     <header class="section-head" data-reveal>
-      <p class="eyebrow">04 · Trayectoria</p>
-      <h2 id="trayectoria-title" class="section-title">Un camino construido con oficio y formación certificada.</h2>
+      <p class="eyebrow">05 · Formación</p>
+      <h2 id="formacion-title" class="section-title">Aprendizaje continuo, certificado y aplicado.</h2>
     </header>
 
     <div class="layout">
-      <ol class="timeline">
-        {journey.map((j, i) => (
-          <li class="step" data-reveal style={`--d:${i}`}>
-            <span class="when">{j.when}</span>
-            <div>
-              <h3>{j.title}</h3>
-              <p>{j.text}</p>
-            </div>
-          </li>
-        ))}
-      </ol>
+      <aside class="current" data-reveal>
+        <p class="now">En curso</p>
+        <h3>{currentStudy.title}</h3>
+        <p class="program">{currentStudy.program}</p>
+        <p class="text">{currentStudy.text}</p>
+        <ul class="tags" aria-label="Áreas">
+          <li class="tag">IA para Marketing</li>
+          <li class="tag">IA para Ventas</li>
+          <li class="tag">IA para RR. HH.</li>
+          <li class="tag">IA para Finanzas</li>
+        </ul>
+      </aside>
 
       <div class="certs">
         <h3 class="certs-title" id="certs-title">Certificaciones</h3>
@@ -51,6 +52,11 @@ const full = await Promise.all(
                 <h4>{c.title}</h4>
                 <p class="cert-date"><time datetime={c.dateISO}>{c.date}</time></p>
                 <p class="cert-detail">{c.detail}</p>
+                {c.verifyUrl && (
+                  <a class="cert-verify" href={c.verifyUrl} target="_blank" rel="noopener noreferrer">
+                    Verificar autenticidad <Icon name="arrow-up-right" /><span class="sr-only"> de {c.title} (abre en una pestaña nueva)</span>
+                  </a>
+                )}
               </div>
             </li>
           ))}
@@ -77,55 +83,80 @@ const full = await Promise.all(
     gap: clamp(2.5rem, 1rem + 5vw, 6rem);
     align-items: start;
   }
-  .timeline {
-    list-style: none;
-    padding: 0;
-    position: relative;
-  }
-  .timeline::before {
-    content: '';
-    position: absolute;
-    left: 0.35rem;
-    top: 0.6rem;
-    bottom: 0.6rem;
-    width: 1px;
-    background: var(--line);
-  }
-  .step {
-    position: relative;
-    padding: 0 0 2rem 2rem;
+  .current {
+    position: sticky;
+    top: calc(var(--header-h) + 2rem);
     display: grid;
-    gap: 0.3rem;
+    gap: 0.6rem;
+    padding: clamp(1.5rem, 1rem + 1.5vw, 2.25rem);
+    border-radius: var(--radius-lg);
+    background: var(--ink);
+    color: var(--paper);
   }
-  .step::before {
+  .current .now {
+    display: inline-flex;
+    align-items: center;
+    gap: 0.45rem;
+    font-size: 0.78rem;
+    font-weight: 600;
+    text-transform: uppercase;
+    letter-spacing: 0.06em;
+    color: var(--paper);
+    opacity: 0.85;
+  }
+  .current .now::before {
     content: '';
-    position: absolute;
-    left: 0;
-    top: 0.4rem;
-    width: 0.75rem;
-    height: 0.75rem;
+    width: 0.45rem;
+    height: 0.45rem;
     border-radius: 50%;
-    background: var(--paper);
-    border: 2px solid var(--accent);
+    background: #6fd3a0;
   }
-  .step:last-child {
-    padding-bottom: 0;
+  .current h3 {
+    font-size: var(--step-3);
   }
-  .when {
+  .program {
+    font-weight: 600;
+    opacity: 0.85;
+  }
+  .text {
+    font-size: var(--step--1);
+    line-height: 1.6;
+    opacity: 0.85;
+    margin-bottom: 0.4rem;
+  }
+  :global([data-theme='dark']) .current {
+    background: var(--accent-soft);
+    color: var(--ink);
+    border: 1px solid color-mix(in srgb, var(--accent) 40%, transparent);
+  }
+  :global([data-theme='dark']) .current .now,
+  :global([data-theme='dark']) .current .tag {
+    color: var(--ink);
+  }
+  :global([data-theme='dark']) .current .tag {
+    border-color: color-mix(in srgb, var(--accent) 45%, transparent);
+  }
+  .current .tag {
+    background: transparent;
+    color: var(--paper);
+    border-color: color-mix(in srgb, var(--paper) 30%, transparent);
+  }
+
+  .cert-verify {
+    display: inline-flex;
+    align-items: center;
+    gap: 0.3rem;
+    width: fit-content;
+    margin-top: 0.2rem;
+    padding-block: 0.3rem;
     font-size: var(--step--1);
     font-weight: 600;
     color: var(--accent);
-    letter-spacing: 0.02em;
   }
-  .step h3 {
-    font-size: var(--step-1);
+  .cert-verify :global(svg) {
+    width: 0.95rem;
+    height: 0.95rem;
   }
-  .step p {
-    color: var(--ink-2);
-    font-size: var(--step--1);
-    margin-top: 0.3rem;
-  }
-
   .certs-title {
     font-size: var(--step-0);
     font-family: var(--font-body);
@@ -259,6 +290,9 @@ const full = await Promise.all(
   @media (max-width: 960px) {
     .layout {
       grid-template-columns: 1fr;
+    }
+    .current {
+      position: static;
     }
   }
   @media (max-width: 520px) {

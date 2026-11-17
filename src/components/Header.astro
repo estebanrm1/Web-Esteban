@@ -4,9 +4,10 @@ import { person } from '../data/profile';
 
 const links = [
   { href: '#perfil', label: 'Perfil' },
+  { href: '#experiencia', label: 'Experiencia' },
   { href: '#proyectos', label: 'Proyectos' },
   { href: '#stack', label: 'Stack' },
-  { href: '#trayectoria', label: 'Trayectoria' },
+  { href: '#formacion', label: 'Formación' },
   { href: '#contacto', label: 'Contacto' },
 ];
 ---
@@ -153,7 +154,7 @@ const links = [
     display: none;
   }
 
-  @media (max-width: 860px) {
+  @media (max-width: 1000px) {
     .menu-btn {
       display: grid;
     }
@@ -253,7 +254,7 @@ const links = [
       toggle.focus();
     }
   });
-  matchMedia('(min-width: 861px)').addEventListener('change', (e) => e.matches && setOpen(false));
+  matchMedia('(min-width: 1001px)').addEventListener('change', (e) => e.matches && setOpen(false));
 
   // ---- Borde al hacer scroll ----
   const onScroll = () => header.classList.toggle('is-scrolled', scrollY > 8);
@@ -277,4 +278,11 @@ const links = [
     const el = document.getElementById(id);
     if (el) io.observe(el);
   });
+  // En el hero no hay sección activa.
+  const hero = document.getElementById('inicio');
+  if (hero) {
+    new IntersectionObserver(([e]) => {
+      if (e.isIntersecting) links.forEach((a) => a.removeAttribute('aria-current'));
+    }, { rootMargin: '-45% 0px -50% 0px' }).observe(hero);
+  }
 </script>

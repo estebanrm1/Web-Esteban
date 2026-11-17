@@ -7,8 +7,8 @@ import { person } from '../data/profile';
   <div class="container grid">
     <div class="intro">
       <header class="section-head" data-reveal>
-        <p class="eyebrow">05 · Contacto</p>
-        <h2 id="contacto-title" class="section-title">¿Tenés un puesto o un proyecto en mente? Hablemos.</h2>
+        <p class="eyebrow">06 · Contacto</p>
+        <h2 id="contacto-title" class="section-title">¿Tenés un puesto o un desafío de eCommerce? Hablemos.</h2>
         <p class="lede">Respondo personalmente. Elegí el canal que te resulte más cómodo.</p>
       </header>
 
@@ -32,7 +32,7 @@ import { person } from '../data/profile';
         <li data-reveal style="--d:2">
           <span class="ch-k">LinkedIn</span>
           <a class="ch-v" href={person.linkedin} target="_blank" rel="noopener noreferrer">
-            in/esteban-molina-front-end<span class="sr-only"> (abre en una pestaña nueva)</span>
+            {person.linkedinHandle}<span class="sr-only"> (abre en una pestaña nueva)</span>
           </a>
         </li>
         <li data-reveal style="--d:3">
@@ -43,7 +43,7 @@ import { person } from '../data/profile';
       <p class="sr-only" role="status" aria-live="polite" data-copy-status></p>
     </div>
 
-    <form class="form" data-contact-form novalidate data-reveal style="--d:1">
+    <form class="form" data-contact-form data-email={person.email} novalidate data-reveal style="--d:1">
       <div class="field">
         <label for="c-name">Nombre</label>
         <input id="c-name" name="user_name" type="text" autocomplete="name" required maxlength="80" aria-describedby="c-name-err" />
@@ -243,7 +243,6 @@ import { person } from '../data/profile';
 <script>
   // Credenciales públicas de EmailJS (diseñadas para usarse en el navegador).
   const EMAILJS = { service: 'service_kc6u0yd', template: 'template_zcw2qg8', publicKey: '2olDYxDDBxZ5wQt6e' };
-  const EMAIL = 'solsel90@gmail.com';
 
   // ---- Copiar email ----
   const copyStatus = document.querySelector<HTMLElement>('[data-copy-status]')!;
@@ -267,6 +266,7 @@ import { person } from '../data/profile';
 
   // ---- Formulario ----
   const form = document.querySelector<HTMLFormElement>('[data-contact-form]')!;
+  const EMAIL = form.dataset.email!;
   const status = form.querySelector<HTMLElement>('[data-form-status]')!;
   const submit = form.querySelector<HTMLButtonElement>('[data-submit]')!;
   const submitLabel = form.querySelector<HTMLElement>('[data-submit-label]')!;
