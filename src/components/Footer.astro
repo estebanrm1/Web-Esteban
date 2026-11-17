@@ -1,0 +1,89 @@
+---
+import Icon from './Icon.astro';
+import { person, site } from '../data/profile';
+const year = new Date().getFullYear();
+---
+
+<footer class="footer">
+  <div class="container inner">
+    <p class="big">¿Buscás a alguien que cuide cada detalle? <a href="#contacto">Escribime.</a></p>
+    <div class="row">
+      <p>© {year} {person.name}. Diseñado y desarrollado por mí.</p>
+      <ul>
+        <li><a href={person.linkedin} target="_blank" rel="noopener noreferrer"><Icon name="linkedin" label="LinkedIn" /></a></li>
+        <li><a href={person.github} target="_blank" rel="noopener noreferrer"><Icon name="github" label="GitHub" /></a></li>
+        <li><a href={person.whatsapp} target="_blank" rel="noopener noreferrer"><Icon name="whatsapp" label="WhatsApp" /></a></li>
+        <li><a href={`mailto:${person.email}`}><Icon name="mail" label="Email" /></a></li>
+      </ul>
+      <p><a href={site.repo} target="_blank" rel="noopener noreferrer">Código fuente</a> · <a href="#inicio">Volver arriba ↑</a></p>
+    </div>
+  </div>
+</footer>
+
+<style>
+  .footer {
+    /* Siempre oscuro, en ambos temas */
+    --f-bg: #0d0b10;
+    --f-fg: #f5f1ea;
+    --f-accent: #d7b2f5;
+    background: var(--f-bg);
+    color: var(--f-fg);
+    padding-block: clamp(3.5rem, 2rem + 5vw, 6rem) 2rem;
+  }
+  .inner {
+    display: grid;
+    gap: clamp(2.5rem, 2rem + 3vw, 4.5rem);
+  }
+  .big {
+    font-family: var(--font-display);
+    font-size: var(--step-3);
+    font-weight: 650;
+    letter-spacing: -0.025em;
+    line-height: 1.1;
+    max-width: 22ch;
+  }
+  .big a {
+    color: var(--f-accent);
+    text-decoration-thickness: 2px;
+  }
+  .row p a {
+    display: inline-block;
+    padding-block: 0.6rem;
+  }
+  .row p a:hover {
+    color: var(--f-fg);
+  }
+  .row {
+    display: flex;
+    flex-wrap: wrap;
+    align-items: center;
+    justify-content: space-between;
+    gap: 1rem 2rem;
+    padding-top: 1.5rem;
+    border-top: 1px solid rgb(255 255 255 / 0.15);
+    font-size: var(--step--1);
+    color: color-mix(in srgb, var(--f-fg) 78%, transparent);
+  }
+  ul {
+    display: flex;
+    gap: 0.25rem;
+    list-style: none;
+    padding: 0;
+  }
+  ul a {
+    display: grid;
+    place-items: center;
+    width: 2.75rem;
+    height: 2.75rem;
+    border-radius: 999px;
+    color: var(--f-fg);
+    transition: background-color 0.2s var(--ease);
+  }
+  ul a:hover {
+    background: rgb(255 255 255 / 0.1);
+  }
+  ul :global(svg) {
+    width: 1.2rem;
+    height: 1.2rem;
+  }
+</style>

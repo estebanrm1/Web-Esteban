@@ -1,0 +1,336 @@
+---
+import Icon from './Icon.astro';
+import { person } from '../data/profile';
+---
+
+<section id="contacto" class="section contact" aria-labelledby="contacto-title">
+  <div class="container grid">
+    <div class="intro">
+      <header class="section-head" data-reveal>
+        <p class="eyebrow">05 · Contacto</p>
+        <h2 id="contacto-title" class="section-title">¿Tenés un puesto o un proyecto en mente? Hablemos.</h2>
+        <p class="lede">Respondo personalmente. Elegí el canal que te resulte más cómodo.</p>
+      </header>
+
+      <ul class="channels">
+        <li data-reveal>
+          <span class="ch-k">Email</span>
+          <div class="ch-row">
+            <a class="ch-v" href={`mailto:${person.email}`}>{person.email}</a>
+            <button class="copy" type="button" data-copy={person.email}>
+              <Icon name="copy" class="i-copy" /><Icon name="check" class="i-check" />
+              <span data-copy-label>Copiar</span>
+            </button>
+          </div>
+        </li>
+        <li data-reveal style="--d:1">
+          <span class="ch-k">WhatsApp</span>
+          <a class="ch-v" href={person.whatsapp} target="_blank" rel="noopener noreferrer">
+            {person.phoneDisplay}<span class="sr-only"> (abre WhatsApp en una pestaña nueva)</span>
+          </a>
+        </li>
+        <li data-reveal style="--d:2">
+          <span class="ch-k">LinkedIn</span>
+          <a class="ch-v" href={person.linkedin} target="_blank" rel="noopener noreferrer">
+            in/esteban-molina-front-end<span class="sr-only"> (abre en una pestaña nueva)</span>
+          </a>
+        </li>
+        <li data-reveal style="--d:3">
+          <span class="ch-k">CV</span>
+          <a class="ch-v" href={person.cvPdf} download>Descargar PDF</a>
+        </li>
+      </ul>
+      <p class="sr-only" role="status" aria-live="polite" data-copy-status></p>
+    </div>
+
+    <form class="form" data-contact-form novalidate data-reveal style="--d:1">
+      <div class="field">
+        <label for="c-name">Nombre</label>
+        <input id="c-name" name="user_name" type="text" autocomplete="name" required maxlength="80" aria-describedby="c-name-err" />
+        <p class="err" id="c-name-err" data-error-for="c-name"></p>
+      </div>
+      <div class="field">
+        <label for="c-email">Email</label>
+        <input id="c-email" name="user_email" type="email" autocomplete="email" inputmode="email" required maxlength="120" aria-describedby="c-email-err" />
+        <p class="err" id="c-email-err" data-error-for="c-email"></p>
+      </div>
+      <div class="field">
+        <label for="c-subject">Asunto</label>
+        <input id="c-subject" name="user_subjet" type="text" required maxlength="120" aria-describedby="c-subject-err" />
+        <p class="err" id="c-subject-err" data-error-for="c-subject"></p>
+      </div>
+      <div class="field">
+        <label for="c-message">Mensaje</label>
+        <textarea id="c-message" name="user_message" rows="6" required minlength="10" maxlength="3000" aria-describedby="c-message-err"></textarea>
+        <p class="err" id="c-message-err" data-error-for="c-message"></p>
+      </div>
+      <!-- Trampa antispam: invisible para personas -->
+      <div class="hp" aria-hidden="true">
+        <label for="c-website">No completar</label>
+        <input id="c-website" name="website" type="text" tabindex="-1" autocomplete="off" />
+      </div>
+
+      <button class="btn btn--accent submit" type="submit" data-submit>
+        <span data-submit-label>Enviar mensaje</span> <Icon name="arrow" />
+      </button>
+      <p class="form-status" role="status" aria-live="polite" data-form-status></p>
+    </form>
+  </div>
+</section>
+
+<style>
+  .grid {
+    display: grid;
+    grid-template-columns: minmax(0, 1fr) minmax(0, 1.05fr);
+    gap: clamp(2.5rem, 1rem + 5vw, 6rem);
+    align-items: start;
+  }
+  .channels {
+    list-style: none;
+    padding: 0;
+    display: grid;
+  }
+  .channels li {
+    display: grid;
+    gap: 0.15rem;
+    padding-block: 1rem;
+    border-top: 1px solid var(--line);
+  }
+  .channels li:last-child {
+    border-bottom: 1px solid var(--line);
+  }
+  .ch-k {
+    font-size: 0.78rem;
+    font-weight: 600;
+    text-transform: uppercase;
+    letter-spacing: 0.06em;
+    color: var(--ink-3);
+  }
+  .ch-row {
+    display: flex;
+    flex-wrap: wrap;
+    align-items: center;
+    gap: 0.5rem 1rem;
+  }
+  .ch-v {
+    font-family: var(--font-display);
+    font-size: var(--step-1);
+    font-weight: 550;
+    text-decoration: none;
+    overflow-wrap: anywhere;
+  }
+  .ch-v:hover {
+    color: var(--accent);
+    text-decoration: underline;
+  }
+  .copy {
+    display: inline-flex;
+    align-items: center;
+    gap: 0.35rem;
+    min-height: 2.25rem;
+    padding: 0.25rem 0.75rem;
+    border-radius: 999px;
+    border: 1px solid var(--line);
+    background: transparent;
+    font-size: var(--step--1);
+    cursor: pointer;
+  }
+  .copy:hover {
+    border-color: var(--ink);
+  }
+  .copy :global(svg) {
+    width: 0.95rem;
+    height: 0.95rem;
+  }
+  .copy :global(.i-check),
+  .copy.is-done :global(.i-copy) {
+    display: none;
+  }
+  .copy.is-done :global(.i-check) {
+    display: block;
+    color: var(--signal);
+  }
+
+  .form {
+    display: grid;
+    gap: 1.1rem;
+    padding: clamp(1.4rem, 1rem + 2vw, 2.4rem);
+    border-radius: var(--radius-lg);
+    background: var(--surface);
+    border: 1px solid var(--line);
+    box-shadow: var(--shadow);
+  }
+  .field {
+    display: grid;
+    gap: 0.4rem;
+  }
+  label {
+    font-weight: 600;
+    font-size: var(--step--1);
+  }
+  input,
+  textarea {
+    width: 100%;
+    padding: 0.8rem 0.95rem;
+    border-radius: 12px;
+    border: 1px solid var(--line);
+    background: var(--paper);
+    transition: border-color 0.2s var(--ease), box-shadow 0.2s var(--ease);
+  }
+  textarea {
+    resize: vertical;
+    min-height: 9rem;
+  }
+  input:hover,
+  textarea:hover {
+    border-color: var(--ink-3);
+  }
+  input:focus-visible,
+  textarea:focus-visible {
+    outline: none;
+    border-color: var(--accent);
+    box-shadow: 0 0 0 3px color-mix(in srgb, var(--accent) 25%, transparent);
+  }
+  [aria-invalid='true'] {
+    border-color: var(--danger);
+  }
+  .err {
+    color: var(--danger);
+    font-size: var(--step--1);
+    min-height: 0;
+  }
+  .err:empty {
+    display: none;
+  }
+  .hp {
+    position: absolute;
+    left: -9999px;
+    width: 1px;
+    height: 1px;
+    overflow: hidden;
+  }
+  .submit {
+    justify-self: start;
+    margin-top: 0.3rem;
+  }
+  .submit[disabled] {
+    opacity: 0.6;
+    cursor: progress;
+    transform: none;
+  }
+  .form-status {
+    font-weight: 500;
+  }
+  .form-status:empty {
+    display: none;
+  }
+  .form-status.ok {
+    color: var(--signal);
+  }
+  .form-status.fail {
+    color: var(--danger);
+  }
+  @media (max-width: 860px) {
+    .grid {
+      grid-template-columns: 1fr;
+    }
+    .submit {
+      justify-self: stretch;
+    }
+  }
+</style>
+
+<script>
+  // Credenciales públicas de EmailJS (diseñadas para usarse en el navegador).
+  const EMAILJS = { service: 'service_kc6u0yd', template: 'template_zcw2qg8', publicKey: '2olDYxDDBxZ5wQt6e' };
+  const EMAIL = 'solsel90@gmail.com';
+
+  // ---- Copiar email ----
+  const copyStatus = document.querySelector<HTMLElement>('[data-copy-status]')!;
+  document.querySelectorAll<HTMLButtonElement>('[data-copy]').forEach((btn) => {
+    const label = btn.querySelector('[data-copy-label]')!;
+    btn.addEventListener('click', async () => {
+      try {
+        await navigator.clipboard.writeText(btn.dataset.copy!);
+        btn.classList.add('is-done');
+        label.textContent = 'Copiado';
+        copyStatus.textContent = 'Email copiado al portapapeles';
+        setTimeout(() => {
+          btn.classList.remove('is-done');
+          label.textContent = 'Copiar';
+        }, 2200);
+      } catch {
+        location.href = `mailto:${btn.dataset.copy}`;
+      }
+    });
+  });
+
+  // ---- Formulario ----
+  const form = document.querySelector<HTMLFormElement>('[data-contact-form]')!;
+  const status = form.querySelector<HTMLElement>('[data-form-status]')!;
+  const submit = form.querySelector<HTMLButtonElement>('[data-submit]')!;
+  const submitLabel = form.querySelector<HTMLElement>('[data-submit-label]')!;
+  const fields = [...form.querySelectorAll<HTMLInputElement | HTMLTextAreaElement>('input[required], textarea[required]')];
+
+  const messageFor = (el: HTMLInputElement | HTMLTextAreaElement) => {
+    const v = el.validity;
+    if (v.valueMissing) return 'Este campo es obligatorio.';
+    if (v.typeMismatch) return 'Ingresá un email válido, por ejemplo nombre@dominio.com.';
+    if (v.tooShort) return `Escribí al menos ${el.getAttribute('minlength')} caracteres.`;
+    return '';
+  };
+  const validate = (el: HTMLInputElement | HTMLTextAreaElement) => {
+    el.value = el.value.trimStart();
+    const msg = el.checkValidity() ? '' : messageFor(el);
+    el.setAttribute('aria-invalid', String(Boolean(msg)));
+    form.querySelector<HTMLElement>(`[data-error-for="${el.id}"]`)!.textContent = msg;
+    return !msg;
+  };
+  fields.forEach((el) => {
+    el.addEventListener('blur', () => el.value && validate(el));
+    el.addEventListener('input', () => el.getAttribute('aria-invalid') === 'true' && validate(el));
+  });
+
+  const setStatus = (text: string, kind: 'ok' | 'fail' | '') => {
+    status.textContent = text;
+    status.className = `form-status ${kind}`;
+  };
+
+  form.addEventListener('submit', async (e) => {
+    e.preventDefault();
+    const invalid = fields.filter((el) => !validate(el));
+    if (invalid.length) {
+      invalid[0].focus();
+      setStatus('Revisá los campos marcados.', 'fail');
+      return;
+    }
+    const data = new FormData(form);
+    if (data.get('website')) return; // bot
+
+    submit.disabled = true;
+    submitLabel.textContent = 'Enviando…';
+    setStatus('', '');
+    try {
+      const { default: emailjs } = await import('@emailjs/browser');
+      await emailjs.send(
+        EMAILJS.service,
+        EMAILJS.template,
+        {
+          user_name: String(data.get('user_name')),
+          user_email: String(data.get('user_email')),
+          user_subjet: String(data.get('user_subjet')),
+          user_message: String(data.get('user_message')),
+        },
+        { publicKey: EMAILJS.publicKey },
+      );
+      form.reset();
+      fields.forEach((el) => el.removeAttribute('aria-invalid'));
+      setStatus('¡Mensaje enviado! Gracias por escribirme, te respondo a la brevedad.', 'ok');
+    } catch {
+      setStatus(`No se pudo enviar el mensaje. Probá de nuevo o escribime directamente a ${EMAIL}.`, 'fail');
+    } finally {
+      submit.disabled = false;
+      submitLabel.textContent = 'Enviar mensaje';
+    }
+  });
+</script>

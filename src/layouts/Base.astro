@@ -1,0 +1,106 @@
+---
+import '@fontsource-variable/bricolage-grotesque';
+import '@fontsource-variable/inter-tight';
+import '../styles/global.css';
+import { site, person, skills, certificates } from '../data/profile';
+
+interface Props {
+  title?: string;
+  description?: string;
+  noindex?: boolean;
+  /** Incluye datos estructurados de la persona (solo en la home). */
+  personSchema?: boolean;
+}
+
+const { title = site.title, description = site.description, noindex = false, personSchema = false } = Astro.props;
+const canonical = new URL(Astro.url.pathname.replace(/\.html$/, '').replace(/\/index$/, '/'), site.url).href;
+const ogImage = new URL('/og.png', site.url).href;
+
+const jsonLd = {
+  '@context': 'https://schema.org',
+  '@graph': [
+    {
+      '@type': 'Person',
+      '@id': `${site.url}/#person`,
+      name: person.name,
+      alternateName: person.fullName,
+      jobTitle: person.role,
+      url: site.url,
+      image: new URL('/esteban-molina.jpg', site.url).href,
+      email: `mailto:${person.email}`,
+      address: { '@type': 'PostalAddress', addressCountry: 'AR' },
+      sameAs: [person.linkedin, person.github],
+      knowsAbout: skills.flatMap((s) => s.items),
+      hasCredential: certificates.map((c) => ({
+        '@type': 'EducationalOccupationalCredential',
+        name: c.title,
+        dateCreated: c.dateISO,
+        recognizedBy: { '@type': 'Organization', name: c.issuer },
+      })),
+    },
+    {
+      '@type': 'WebSite',
+      '@id': `${site.url}/#website`,
+      url: site.url,
+      name: `${person.name} — Portfolio`,
+      inLanguage: site.lang,
+      publisher: { '@id': `${site.url}/#person` },
+    },
+  ],
+};
+---
+
+<!doctype html>
+<html lang={site.lang}>
+  <head>
+    <meta charset="utf-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1" />
+    <title>{title}</title>
+    <meta name="description" content={description} />
+    <link rel="canonical" href={canonical} />
+    <meta name="author" content={person.name} />
+    {noindex ? <meta name="robots" content="noindex, follow" /> : <meta name="robots" content="index, follow, max-image-preview:large" />}
+    <meta name="theme-color" content="#f5f1ea" media="(prefers-color-scheme: light)" />
+    <meta name="theme-color" content="#121016" media="(prefers-color-scheme: dark)" />
+
+    <link rel="icon" href="/favicon.svg" type="image/svg+xml" />
+    <link rel="apple-touch-icon" href="/apple-touch-icon.png" />
+    <link rel="sitemap" href="/sitemap-index.xml" />
+
+    <!-- Open Graph / redes profesionales -->
+    <meta property="og:type" content="profile" />
+    <meta property="og:locale" content="es_AR" />
+    <meta property="og:site_name" content={`${person.name} — Portfolio`} />
+    <meta property="og:title" content={title} />
+    <meta property="og:description" content={description} />
+    <meta property="og:url" content={canonical} />
+    <meta property="og:image" content={ogImage} />
+    <meta property="og:image:width" content="1200" />
+    <meta property="og:image:height" content="630" />
+    <meta property="og:image:alt" content={`${person.name} — ${person.role}`} />
+    <meta property="profile:first_name" content="Esteban" />
+    <meta property="profile:last_name" content="Molina" />
+    <meta name="twitter:card" content="summary_large_image" />
+    <meta name="twitter:title" content={title} />
+    <meta name="twitter:description" content={description} />
+    <meta name="twitter:image" content={ogImage} />
+
+    {personSchema && <script type="application/ld+json" set:html={JSON.stringify(jsonLd)} />}
+
+    <!-- Tema antes del primer pintado: evita parpadeo -->
+    <script is:inline>
+      (function () {
+        var d = document.documentElement;
+        d.classList.add('js');
+        var t = null;
+        try { t = localStorage.getItem('theme'); } catch (e) {}
+        if (t !== 'light' && t !== 'dark') t = matchMedia('(prefers-color-scheme: dark)').matches ? 'dark' : 'light';
+        d.dataset.theme = t;
+      })();
+    </script>
+  </head>
+  <body>
+    <a class="skip-link" href="#contenido">Saltar al contenido</a>
+    <slot />
+  </body>
+</html>

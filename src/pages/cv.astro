@@ -1,0 +1,222 @@
+---
+import Base from '../layouts/Base.astro';
+import { person, pitch, about, projects, skills, certificates, site } from '../data/profile';
+const host = (u: string) => u.replace(/^https?:\/\//, '').replace(/\/$/, '');
+---
+
+<Base title="CV — Esteban Molina, Desarrollador Full Stack MERN" description={`Currículum de ${person.name}: ${person.role}. ${pitch.headline}`}>
+  <nav class="toolbar" aria-label="Acciones del CV">
+    <a href="/">← Volver al portfolio</a>
+    <a class="btn btn--accent" href={person.cvPdf} download>Descargar PDF</a>
+  </nav>
+
+  <main id="contenido" class="cv">
+    <header class="cv-head">
+      <div>
+        <h1>{person.name}</h1>
+        <p class="cv-role">{person.role} · {person.focus}</p>
+      </div>
+      <ul class="cv-contact">
+        <li><a href={`mailto:${person.email}`}>{person.email}</a></li>
+        <li><a href={person.whatsapp}>{person.phoneDisplay}</a></li>
+        <li><a href={person.linkedin}>{host(person.linkedin).replace('www.', '')}</a></li>
+        <li><a href={person.github}>{host(person.github)}</a></li>
+        <li><a href={site.url}>{host(site.url)}</a></li>
+        <li>{person.location}</li>
+      </ul>
+    </header>
+
+    <section>
+      <h2>Perfil</h2>
+      <p>{pitch.summary}</p>
+      <p>{about.paragraphs[1]}</p>
+    </section>
+
+    <div class="cols">
+      <div>
+        <section>
+          <h2>Proyectos</h2>
+          {projects.map((p) => (
+            <article class="item">
+              <h3>{p.title} <span>· {p.kind}</span></h3>
+              <p>{p.description}</p>
+              <p class="muted">{p.stack.join(' · ')} — <a href={p.demo}>{host(p.demo)}</a></p>
+            </article>
+          ))}
+        </section>
+
+        <section>
+          <h2>Experiencia previa</h2>
+          <article class="item">
+            <h3>Gastronomía <span>· +10 años</span></h3>
+            <p>Atención al cliente y encargado. Comunicación, gestión y resolución de problemas en tiempo real.</p>
+          </article>
+        </section>
+      </div>
+
+      <aside>
+        <section>
+          <h2>Habilidades</h2>
+          {skills.map((g) => (
+            <div class="item">
+              <h3>{g.group}</h3>
+              <p>{g.items.join(', ')}</p>
+            </div>
+          ))}
+        </section>
+
+        <section>
+          <h2>Formación</h2>
+          {certificates.map((c) => (
+            <div class="item">
+              <h3>{c.title}</h3>
+              <p class="muted">{c.issuer} · {c.date}</p>
+            </div>
+          ))}
+          <div class="item">
+            <h3>Oracle Next Education (ONE)</h3>
+            <p class="muted">Alura Latam · Programación con IA</p>
+          </div>
+        </section>
+      </aside>
+    </div>
+  </main>
+</Base>
+
+<style>
+  :global(body) {
+    background: var(--paper-2);
+  }
+  .toolbar {
+    max-width: 210mm;
+    margin: 1.5rem auto 1rem;
+    padding-inline: 1rem;
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    gap: 1rem;
+  }
+  .cv {
+    /* El CV siempre en claro, independiente del tema */
+    --paper: #ffffff;
+    --ink: #17131c;
+    --ink-2: #3f3946;
+    --ink-3: #6b6372;
+    --line: #ddd5e3;
+    --accent: #6a2a85;
+    color: var(--ink);
+    background: var(--paper);
+    width: min(100% - 2rem, 210mm);
+    min-height: 297mm;
+    margin: 0 auto 3rem;
+    padding: 14mm 15mm;
+    box-shadow: var(--shadow);
+    font-size: 10pt;
+    line-height: 1.5;
+  }
+  .cv-head {
+    display: flex;
+    justify-content: space-between;
+    gap: 1.5rem;
+    padding-bottom: 6mm;
+    border-bottom: 2px solid var(--ink);
+    margin-bottom: 6mm;
+  }
+  h1 {
+    font-size: 26pt;
+    letter-spacing: -0.03em;
+  }
+  .cv-role {
+    color: var(--accent);
+    font-weight: 600;
+    font-size: 12pt;
+    margin-top: 1.5mm;
+  }
+  .cv-contact {
+    list-style: none;
+    padding: 0;
+    text-align: right;
+    font-size: 8.8pt;
+    color: var(--ink-2);
+  }
+  .cv-contact a {
+    text-decoration: none;
+    display: inline-block;
+    min-height: 24px;
+  }
+  h2 {
+    font-size: 9pt;
+    text-transform: uppercase;
+    letter-spacing: 0.12em;
+    color: var(--accent);
+    margin: 5mm 0 2.5mm;
+    font-family: var(--font-body);
+    font-weight: 700;
+  }
+  section > p + p {
+    margin-top: 2mm;
+  }
+  section > p {
+    color: var(--ink-2);
+  }
+  .cols {
+    display: grid;
+    grid-template-columns: 1.6fr 1fr;
+    gap: 8mm;
+  }
+  .item {
+    margin-bottom: 3.2mm;
+    break-inside: avoid;
+  }
+  h3 {
+    font-size: 10.5pt;
+    letter-spacing: -0.01em;
+  }
+  h3 span {
+    font-weight: 500;
+    color: var(--ink-3);
+    font-family: var(--font-body);
+  }
+  .item p {
+    color: var(--ink-2);
+  }
+  .muted {
+    color: var(--ink-3) !important;
+    font-size: 8.8pt;
+  }
+  .cv a {
+    color: inherit;
+  }
+  @media (max-width: 700px) {
+    .cv {
+      padding: 1.5rem;
+      min-height: 0;
+    }
+    .cv-head,
+    .cols {
+      display: grid;
+      grid-template-columns: 1fr;
+    }
+    .cv-contact {
+      text-align: left;
+    }
+  }
+  @media print {
+    @page {
+      size: A4;
+      margin: 0;
+    }
+    :global(body) {
+      background: #fff;
+    }
+    :global(.skip-link),
+    .toolbar {
+      display: none;
+    }
+    .cv {
+      width: 210mm;
+      margin: 0;
+      box-shadow: none;
+    }
+  }
+</style>

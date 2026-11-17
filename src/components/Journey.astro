@@ -1,0 +1,289 @@
+---
+import { Image, getImage } from 'astro:assets';
+import Icon from './Icon.astro';
+import { journey, certificates } from '../data/profile';
+
+// Versión grande optimizada para el visor (se carga solo al abrirlo).
+const full = await Promise.all(
+  certificates.map((c) => getImage({ src: c.image, width: 1600, format: 'webp', quality: 78 })),
+);
+---
+
+<section id="trayectoria" class="section" aria-labelledby="trayectoria-title">
+  <div class="container">
+    <header class="section-head" data-reveal>
+      <p class="eyebrow">04 · Trayectoria</p>
+      <h2 id="trayectoria-title" class="section-title">Un camino construido con oficio y formación certificada.</h2>
+    </header>
+
+    <div class="layout">
+      <ol class="timeline">
+        {journey.map((j, i) => (
+          <li class="step" data-reveal style={`--d:${i}`}>
+            <span class="when">{j.when}</span>
+            <div>
+              <h3>{j.title}</h3>
+              <p>{j.text}</p>
+            </div>
+          </li>
+        ))}
+      </ol>
+
+      <div class="certs">
+        <h3 class="certs-title" id="certs-title">Certificaciones</h3>
+        <ul aria-labelledby="certs-title">
+          {certificates.map((c, i) => (
+            <li class="cert" data-reveal style={`--d:${i}`}>
+              <button
+                class="cert-btn"
+                type="button"
+                data-cert-open
+                data-src={full[i].src}
+                data-title={c.title}
+                aria-haspopup="dialog"
+              >
+                <Image src={c.image} alt="" width={420} quality={65} loading="lazy" />
+                <span class="cert-zoom" aria-hidden="true"><Icon name="expand" /></span>
+                <span class="sr-only">Ver certificado {c.title} ampliado</span>
+              </button>
+              <div class="cert-info">
+                <p class="cert-issuer">{c.issuer}</p>
+                <h4>{c.title}</h4>
+                <p class="cert-date"><time datetime={c.dateISO}>{c.date}</time></p>
+                <p class="cert-detail">{c.detail}</p>
+              </div>
+            </li>
+          ))}
+        </ul>
+      </div>
+    </div>
+  </div>
+
+  <dialog class="viewer" data-cert-dialog aria-labelledby="viewer-title">
+    <div class="viewer-bar">
+      <p id="viewer-title" class="viewer-title" data-cert-title></p>
+      <button class="viewer-close" type="button" data-cert-close>
+        <Icon name="close" /><span class="sr-only">Cerrar</span>
+      </button>
+    </div>
+    <img data-cert-img alt="" width="1600" height="1130" decoding="async" />
+  </dialog>
+</section>
+
+<style>
+  .layout {
+    display: grid;
+    grid-template-columns: minmax(0, 1fr) minmax(0, 1.25fr);
+    gap: clamp(2.5rem, 1rem + 5vw, 6rem);
+    align-items: start;
+  }
+  .timeline {
+    list-style: none;
+    padding: 0;
+    position: relative;
+  }
+  .timeline::before {
+    content: '';
+    position: absolute;
+    left: 0.35rem;
+    top: 0.6rem;
+    bottom: 0.6rem;
+    width: 1px;
+    background: var(--line);
+  }
+  .step {
+    position: relative;
+    padding: 0 0 2rem 2rem;
+    display: grid;
+    gap: 0.3rem;
+  }
+  .step::before {
+    content: '';
+    position: absolute;
+    left: 0;
+    top: 0.4rem;
+    width: 0.75rem;
+    height: 0.75rem;
+    border-radius: 50%;
+    background: var(--paper);
+    border: 2px solid var(--accent);
+  }
+  .step:last-child {
+    padding-bottom: 0;
+  }
+  .when {
+    font-size: var(--step--1);
+    font-weight: 600;
+    color: var(--accent);
+    letter-spacing: 0.02em;
+  }
+  .step h3 {
+    font-size: var(--step-1);
+  }
+  .step p {
+    color: var(--ink-2);
+    font-size: var(--step--1);
+    margin-top: 0.3rem;
+  }
+
+  .certs-title {
+    font-size: var(--step-0);
+    font-family: var(--font-body);
+    letter-spacing: 0;
+    color: var(--ink-3);
+    font-weight: 600;
+    margin-bottom: 1rem;
+  }
+  .certs ul {
+    list-style: none;
+    padding: 0;
+    display: grid;
+    gap: 1rem;
+  }
+  .cert {
+    display: grid;
+    grid-template-columns: 11rem 1fr;
+    gap: 1.25rem;
+    padding: 1rem;
+    border-radius: var(--radius-lg);
+    background: var(--surface);
+    border: 1px solid var(--line);
+    align-items: center;
+  }
+  .cert-btn {
+    position: relative;
+    padding: 0;
+    border: 1px solid var(--line);
+    border-radius: 10px;
+    overflow: hidden;
+    cursor: zoom-in;
+    background: #fff;
+  }
+  .cert-btn :global(img) {
+    width: 100%;
+    aspect-ratio: 1.414;
+    object-fit: cover;
+    transition: transform 0.5s var(--ease);
+  }
+  .cert-btn:hover :global(img) {
+    transform: scale(1.05);
+  }
+  .cert-zoom {
+    position: absolute;
+    right: 0.4rem;
+    bottom: 0.4rem;
+    display: grid;
+    place-items: center;
+    width: 1.8rem;
+    height: 1.8rem;
+    border-radius: 999px;
+    background: var(--ink);
+    color: var(--paper);
+  }
+  .cert-zoom :global(svg) {
+    width: 0.9rem;
+    height: 0.9rem;
+  }
+  .cert-info {
+    display: grid;
+    gap: 0.2rem;
+  }
+  .cert-issuer {
+    font-size: 0.78rem;
+    font-weight: 600;
+    color: var(--ink-3);
+    text-transform: uppercase;
+    letter-spacing: 0.05em;
+    line-height: 1.4;
+  }
+  .cert-info h4 {
+    font-size: var(--step-1);
+  }
+  .cert-date {
+    font-size: var(--step--1);
+    color: var(--accent);
+    font-weight: 600;
+  }
+  .cert-detail {
+    font-size: var(--step--1);
+    color: var(--ink-2);
+    line-height: 1.5;
+  }
+
+  .viewer {
+    width: min(96vw, 1100px);
+    max-height: 92dvh;
+    padding: 0;
+    border: 0;
+    border-radius: var(--radius-lg);
+    background: var(--surface);
+    color: var(--ink);
+    box-shadow: var(--shadow);
+  }
+  .viewer::backdrop {
+    background: rgb(10 8 14 / 0.72);
+    backdrop-filter: blur(4px);
+  }
+  .viewer-bar {
+    display: flex;
+    align-items: center;
+    justify-content: space-between;
+    gap: 1rem;
+    padding: 0.6rem 0.6rem 0.6rem 1.2rem;
+    border-bottom: 1px solid var(--line);
+  }
+  .viewer-title {
+    font-weight: 600;
+  }
+  .viewer-close {
+    display: grid;
+    place-items: center;
+    width: 2.75rem;
+    height: 2.75rem;
+    border-radius: 999px;
+    border: 1px solid var(--line);
+    background: transparent;
+    cursor: pointer;
+  }
+  .viewer-close :global(svg) {
+    width: 1.2rem;
+  }
+  .viewer img {
+    width: 100%;
+    height: auto;
+    max-height: calc(92dvh - 4rem);
+    object-fit: contain;
+    background: #fff;
+  }
+
+  @media (max-width: 960px) {
+    .layout {
+      grid-template-columns: 1fr;
+    }
+  }
+  @media (max-width: 520px) {
+    .cert {
+      grid-template-columns: 1fr;
+    }
+  }
+</style>
+
+<script>
+  const dialog = document.querySelector<HTMLDialogElement>('[data-cert-dialog]')!;
+  const img = dialog.querySelector<HTMLImageElement>('[data-cert-img]')!;
+  const title = dialog.querySelector<HTMLElement>('[data-cert-title]')!;
+
+  document.querySelectorAll<HTMLButtonElement>('[data-cert-open]').forEach((btn) => {
+    btn.addEventListener('click', () => {
+      img.src = btn.dataset.src!;
+      img.alt = `Certificado: ${btn.dataset.title}`;
+      title.textContent = btn.dataset.title!;
+      dialog.showModal();
+    });
+  });
+  dialog.querySelector('[data-cert-close]')!.addEventListener('click', () => dialog.close());
+  // Cerrar al hacer clic fuera del contenido.
+  dialog.addEventListener('click', (e) => {
+    if (e.target === dialog) dialog.close();
+  });
+</script>

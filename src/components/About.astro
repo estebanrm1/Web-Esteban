@@ -1,0 +1,96 @@
+---
+import { about } from '../data/profile';
+---
+
+<section id="perfil" class="section" aria-labelledby="perfil-title">
+  <div class="container grid">
+    <header class="section-head" data-reveal>
+      <p class="eyebrow">01 · Perfil</p>
+      <h2 id="perfil-title" class="section-title">Del salón al código: oficio con personas, foco en la interfaz.</h2>
+    </header>
+
+    <div class="body">
+      {about.paragraphs.map((p, i) => <p data-reveal style={`--d:${i}`}>{p}</p>)}
+    </div>
+
+    <ul class="strengths" aria-label="Lo que aporto">
+      {about.strengths.map((s, i) => (
+        <li class="strength" data-reveal style={`--d:${i}`}>
+          <span class="num" aria-hidden="true">{String(i + 1).padStart(2, '0')}</span>
+          <h3>{s.title}</h3>
+          <p>{s.text}</p>
+        </li>
+      ))}
+    </ul>
+  </div>
+</section>
+
+<style>
+  .grid {
+    display: grid;
+    grid-template-columns: minmax(0, 1fr) minmax(0, 1.1fr);
+    gap: 0 clamp(2rem, 1rem + 5vw, 6rem);
+  }
+  .section-head {
+    margin-bottom: 0;
+  }
+  .body {
+    display: grid;
+    gap: 1.1rem;
+    color: var(--ink-2);
+    font-size: var(--step-0);
+  }
+  .body p:first-child {
+    color: var(--ink);
+    font-size: var(--step-1);
+    line-height: 1.5;
+  }
+  .strengths {
+    grid-column: 1 / -1;
+    margin-top: clamp(3rem, 2rem + 3vw, 4.5rem);
+    display: grid;
+    grid-template-columns: repeat(3, minmax(0, 1fr));
+    gap: 1rem;
+    list-style: none;
+    padding: 0;
+  }
+  .strength {
+    padding: 1.6rem;
+    border-radius: var(--radius-lg);
+    background: var(--surface);
+    border: 1px solid var(--line);
+    display: grid;
+    gap: 0.5rem;
+    align-content: start;
+    transition: border-color 0.3s var(--ease), transform 0.3s var(--ease);
+  }
+  .strength:hover {
+    border-color: var(--accent);
+    transform: translateY(-3px);
+  }
+  .num {
+    font-family: var(--font-display);
+    color: var(--accent);
+    font-weight: 600;
+    font-size: var(--step--1);
+  }
+  .strength h3 {
+    font-size: var(--step-1);
+  }
+  .strength p {
+    color: var(--ink-2);
+    font-size: var(--step--1);
+    line-height: 1.55;
+  }
+  @media (max-width: 860px) {
+    .grid {
+      grid-template-columns: 1fr;
+    }
+    .section-head {
+      margin-bottom: 1.75rem;
+    }
+    .strengths {
+      grid-template-columns: 1fr;
+    }
+  }
+</style>

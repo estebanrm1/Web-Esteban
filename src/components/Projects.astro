@@ -1,0 +1,170 @@
+---
+import { Image } from 'astro:assets';
+import Icon from './Icon.astro';
+import { projects } from '../data/profile';
+---
+
+<section id="proyectos" class="section" aria-labelledby="proyectos-title">
+  <div class="container">
+    <header class="section-head" data-reveal>
+      <p class="eyebrow">02 · Proyectos</p>
+      <h2 id="proyectos-title" class="section-title">Trabajo publicado, en producción y listo para revisar.</h2>
+      <p class="lede">Sitios reales para un emprendimiento propio, gastronomía y perfiles profesionales. Cada captura es del sitio en vivo.</p>
+    </header>
+
+    <ol class="list">
+      {projects.map((p, i) => (
+        <li class:list={['project', { featured: i === 0 }]} data-reveal>
+          <a class="shot" href={p.demo} target="_blank" rel="noopener noreferrer" tabindex="-1" aria-hidden="true">
+            <span class="chrome" aria-hidden="true"><i></i><i></i><i></i><span class="url">{new URL(p.demo).host}</span></span>
+            <Image
+              src={p.image}
+              alt=""
+              widths={[400, 560, 760, 1100]}
+              sizes={i === 0 ? '(max-width: 860px) 100vw, 680px' : '(max-width: 860px) 100vw, (max-width: 1080px) 50vw, 380px'}
+              quality={70}
+              loading="lazy"
+            />
+          </a>
+          <div class="info">
+            <p class="meta"><span>{String(i + 1).padStart(2, '0')}</span> {p.kind}</p>
+            <h3>{p.title}</h3>
+            <p class="desc">{p.description}</p>
+            <ul class="tags" aria-label="Tecnologías">
+              {p.stack.map((t) => <li class="tag">{t}</li>)}
+            </ul>
+            <p class="sr-only">{p.imageAlt}</p>
+            <div class="links">
+              <a class="btn btn--ghost" href={p.demo} target="_blank" rel="noopener noreferrer">
+                Ver sitio <Icon name="arrow-up-right" /><span class="sr-only"> de {p.title} (abre en una pestaña nueva)</span>
+              </a>
+              {p.repo && (
+                <a class="btn btn--ghost" href={p.repo} target="_blank" rel="noopener noreferrer">
+                  <Icon name="github" /> Código<span class="sr-only"> de {p.title} en GitHub (abre en una pestaña nueva)</span>
+                </a>
+              )}
+            </div>
+          </div>
+        </li>
+      ))}
+    </ol>
+  </div>
+</section>
+
+<style>
+  .list {
+    list-style: none;
+    padding: 0;
+    display: grid;
+    grid-template-columns: repeat(3, minmax(0, 1fr));
+    gap: clamp(2.5rem, 1.5rem + 3vw, 4rem) clamp(1.25rem, 0.75rem + 1.5vw, 2rem);
+  }
+  .project {
+    display: grid;
+    gap: 1.4rem;
+    align-content: start;
+  }
+  .featured {
+    grid-column: 1 / -1;
+    grid-template-columns: minmax(0, 1.35fr) minmax(0, 1fr);
+    align-items: center;
+    gap: clamp(1.5rem, 1rem + 3vw, 3.5rem);
+  }
+  .shot {
+    display: block;
+    text-decoration: none;
+    border-radius: var(--radius-lg);
+    overflow: hidden;
+    background: var(--surface);
+    border: 1px solid var(--line);
+    box-shadow: var(--shadow);
+    transition: transform 0.5s var(--ease), box-shadow 0.5s var(--ease);
+  }
+  .chrome {
+    display: flex;
+    align-items: center;
+    gap: 0.35rem;
+    padding: 0.6rem 0.85rem;
+    border-bottom: 1px solid var(--line);
+    background: var(--paper-2);
+  }
+  .chrome i {
+    width: 0.55rem;
+    height: 0.55rem;
+    border-radius: 50%;
+    background: var(--line);
+  }
+  .url {
+    margin-left: 0.6rem;
+    font-size: 0.72rem;
+    color: var(--ink-3);
+    white-space: nowrap;
+    overflow: hidden;
+    text-overflow: ellipsis;
+  }
+  .shot :global(img) {
+    width: 100%;
+    aspect-ratio: 16 / 10;
+    object-fit: cover;
+    object-position: top;
+    transition: transform 0.8s var(--ease);
+  }
+  .project:hover .shot {
+    transform: translateY(-4px);
+  }
+  .project:hover .shot :global(img) {
+    transform: scale(1.025);
+  }
+  .info {
+    display: grid;
+    gap: 0.75rem;
+    align-content: start;
+  }
+  .meta {
+    font-size: var(--step--1);
+    color: var(--ink-3);
+    font-weight: 500;
+  }
+  .meta span {
+    color: var(--accent);
+    font-weight: 600;
+    margin-right: 0.4rem;
+  }
+  .info h3 {
+    font-size: var(--step-2);
+  }
+  .featured h3 {
+    font-size: var(--step-3);
+  }
+  .desc {
+    color: var(--ink-2);
+  }
+  .links {
+    display: flex;
+    flex-wrap: wrap;
+    gap: 0.5rem;
+    margin-top: 0.4rem;
+  }
+  .links .btn {
+    min-height: 2.75rem;
+    padding: 0.5rem 1.05rem;
+  }
+  @media (max-width: 1080px) {
+    .list {
+      grid-template-columns: repeat(2, minmax(0, 1fr));
+    }
+    .project:last-child:not(.featured) {
+      grid-column: 1 / -1;
+      grid-template-columns: minmax(0, 1.35fr) minmax(0, 1fr);
+      align-items: center;
+      gap: clamp(1.5rem, 1rem + 3vw, 3.5rem);
+    }
+  }
+  @media (max-width: 860px) {
+    .list,
+    .featured,
+    .project:last-child:not(.featured) {
+      grid-template-columns: 1fr;
+    }
+  }
+</style>

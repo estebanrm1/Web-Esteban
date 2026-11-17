@@ -1,0 +1,96 @@
+---
+import { skills } from '../data/profile';
+---
+
+<section id="stack" class="section" aria-labelledby="stack-title">
+  <div class="container grid">
+    <header class="section-head" data-reveal>
+      <p class="eyebrow">03 · Stack</p>
+      <h2 id="stack-title" class="section-title">Tecnologías con las que construyo.</h2>
+      <p class="lede">Del maquetado a la base de datos: el stack MERN completo, con especial cuidado en la capa visual.</p>
+    </header>
+
+    <div class="groups">
+      {skills.map((g, i) => (
+        <div class="group" data-reveal style={`--d:${i}`}>
+          <h3>{g.group}</h3>
+          <ul>
+            {g.items.map((s) => <li>{s}</li>)}
+          </ul>
+        </div>
+      ))}
+    </div>
+  </div>
+</section>
+
+<style>
+  .grid {
+    display: grid;
+    grid-template-columns: minmax(0, 0.9fr) minmax(0, 1.3fr);
+    gap: 2rem clamp(2rem, 1rem + 5vw, 6rem);
+    align-items: start;
+  }
+  .section-head {
+    margin-bottom: 0;
+    position: sticky;
+    top: calc(var(--header-h) + 2rem);
+  }
+  .groups {
+    display: grid;
+    gap: 0;
+  }
+  .group {
+    display: grid;
+    grid-template-columns: 11rem 1fr;
+    gap: 1rem;
+    padding-block: 1.5rem;
+    border-top: 1px solid var(--line);
+  }
+  .group:last-child {
+    border-bottom: 1px solid var(--line);
+  }
+  .group h3 {
+    font-size: var(--step-0);
+    font-family: var(--font-body);
+    font-weight: 600;
+    letter-spacing: 0;
+    color: var(--ink-3);
+    padding-top: 0.35rem;
+  }
+  .group ul {
+    list-style: none;
+    padding: 0;
+    display: flex;
+    flex-wrap: wrap;
+    gap: 0.5rem;
+  }
+  .group li {
+    font-family: var(--font-display);
+    font-size: var(--step-1);
+    font-weight: 550;
+    padding: 0.3rem 0.9rem;
+    border-radius: 999px;
+    background: var(--surface);
+    border: 1px solid var(--line);
+    transition: background-color 0.25s var(--ease), color 0.25s var(--ease), border-color 0.25s var(--ease);
+  }
+  .group li:hover {
+    background: var(--accent);
+    border-color: var(--accent);
+    color: var(--accent-ink);
+  }
+  @media (max-width: 860px) {
+    .grid {
+      grid-template-columns: 1fr;
+    }
+    .section-head {
+      position: static;
+    }
+  }
+  @media (max-width: 560px) {
+    .group {
+      grid-template-columns: 1fr;
+      gap: 0.6rem;
+    }
+  }
+</style>
