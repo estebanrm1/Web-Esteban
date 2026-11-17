@@ -43,7 +43,7 @@ import { person } from '../data/profile';
       <p class="sr-only" role="status" aria-live="polite" data-copy-status></p>
     </div>
 
-    <form class="form" data-contact-form data-email={person.email} novalidate data-reveal style="--d:1">
+    <form class="form" data-glow data-contact-form data-email={person.email} novalidate data-reveal style="--d:1">
       <div class="field">
         <label for="c-name">Nombre</label>
         <input id="c-name" name="user_name" type="text" autocomplete="name" required maxlength="80" aria-describedby="c-name-err" />
@@ -100,10 +100,9 @@ import { person } from '../data/profile';
     border-bottom: 1px solid var(--line);
   }
   .ch-k {
-    font-size: 0.78rem;
-    font-weight: 600;
-    text-transform: uppercase;
-    letter-spacing: 0.06em;
+    font-family: var(--font-mono);
+    font-size: 0.72rem;
+    font-weight: 500;
     color: var(--ink-3);
   }
   .ch-row {

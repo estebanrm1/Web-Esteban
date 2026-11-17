@@ -1,7 +1,19 @@
 ---
 import Icon from './Icon.astro';
 import { person, site } from '../data/profile';
+import { execSync } from 'node:child_process';
+
 const year = new Date().getFullYear();
+
+// Hash del commit publicado: Netlify lo expone como COMMIT_REF; en local se lee de git.
+let commit = process.env.COMMIT_REF ?? '';
+if (!commit) {
+  try {
+    commit = execSync('git rev-parse HEAD', { stdio: ['ignore', 'pipe', 'ignore'] }).toString().trim();
+  } catch {}
+}
+const short = commit.slice(0, 7);
+const builtAt = new Date().toISOString().slice(0, 10);
 ---
 
 <footer class="footer">
@@ -17,6 +29,16 @@ const year = new Date().getFullYear();
       </ul>
       <p><a href={site.repo} target="_blank" rel="noopener noreferrer">Código fuente</a> · <a href="#inicio">Volver arriba ↑</a></p>
     </div>
+    <p class="build">
+      <span class="ok" aria-hidden="true"></span>
+      <span>astro · netlify</span>
+      {short && (
+        <a href={`${site.repo}/commit/${commit}`} target="_blank" rel="noopener noreferrer">
+          build {short}<span class="sr-only"> (ver commit en GitHub, abre en una pestaña nueva)</span>
+        </a>
+      )}
+      <span>deploy <time datetime={builtAt}>{builtAt}</time></span>
+    </p>
   </div>
 </footer>
 
@@ -63,6 +85,31 @@ const year = new Date().getFullYear();
     border-top: 1px solid rgb(255 255 255 / 0.15);
     font-size: var(--step--1);
     color: color-mix(in srgb, var(--f-fg) 78%, transparent);
+  }
+  .build {
+    display: flex;
+    flex-wrap: wrap;
+    align-items: center;
+    gap: 0.25rem 1.1rem;
+    margin-top: -2rem;
+    font-family: var(--font-mono);
+    font-size: 0.72rem;
+    color: color-mix(in srgb, var(--f-fg) 72%, transparent);
+  }
+  .build a {
+    display: inline-block;
+    padding-block: 0.45rem;
+    color: inherit;
+  }
+  .build a:hover {
+    color: var(--f-accent);
+  }
+  .ok {
+    width: 0.45rem;
+    height: 0.45rem;
+    border-radius: 50%;
+    background: #6fd3a0;
+    box-shadow: 0 0 0 3px rgb(111 211 160 / 0.18);
   }
   ul {
     display: flex;

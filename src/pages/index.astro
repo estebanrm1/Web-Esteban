@@ -50,4 +50,54 @@ import Footer from '../components/Footer.astro';
     );
     items.forEach((el) => io.observe(el));
   }
+
+  const reduceMotion = matchMedia('(prefers-reduced-motion: reduce)').matches;
+
+  // Brillo que sigue al cursor: un único listener para todas las tarjetas [data-glow].
+  if (matchMedia('(hover: hover)').matches) {
+    document.addEventListener(
+      'pointermove',
+      (e) => {
+        const card = (e.target as HTMLElement).closest<HTMLElement>('[data-glow]');
+        if (!card) return;
+        const r = card.getBoundingClientRect();
+        card.style.setProperty('--mx', `${e.clientX - r.left}px`);
+        card.style.setProperty('--my', `${e.clientY - r.top}px`);
+      },
+      { passive: true },
+    );
+  }
+
+  // Etiquetas de sección que se "decodifican" al entrar en pantalla.
+  if (!reduceMotion && 'IntersectionObserver' in window) {
+    const GLYPHS = 'abcdefghijklmnopqrstuvwxyz0123456789/<>_{}#';
+    const scramble = (el: HTMLElement) => {
+      const final = el.textContent || '';
+      const start = performance.now();
+      const dur = 650;
+      const frame = (now: number) => {
+        const p = Math.min(1, (now - start) / dur);
+        const fixed = Math.floor(final.length * p);
+        let out = final.slice(0, fixed);
+        for (let i = fixed; i < final.length; i++) {
+          out += final[i] === ' ' ? ' ' : GLYPHS[(Math.random() * GLYPHS.length) | 0];
+        }
+        el.textContent = out;
+        if (p < 1) requestAnimationFrame(frame);
+        else el.textContent = final;
+      };
+      requestAnimationFrame(frame);
+    };
+    const eyebrows = new IntersectionObserver(
+      (entries) => {
+        for (const e of entries) {
+          if (!e.isIntersecting) continue;
+          eyebrows.unobserve(e.target);
+          scramble(e.target as HTMLElement);
+        }
+      },
+      { rootMargin: '0px 0px -10% 0px' },
+    );
+    document.querySelectorAll<HTMLElement>('.eyebrow').forEach((el) => eyebrows.observe(el));
+  }
 </script>

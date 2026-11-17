@@ -12,6 +12,7 @@ const links = [
 ];
 ---
 
+<div class="progress" aria-hidden="true" data-progress></div>
 <header class="site-header" data-header>
   <div class="container bar">
     <a class="brand" href="#inicio" aria-label={`${person.name}, ir al inicio`}>
@@ -257,7 +258,12 @@ const links = [
   matchMedia('(min-width: 1001px)').addEventListener('change', (e) => e.matches && setOpen(false));
 
   // ---- Borde al hacer scroll ----
-  const onScroll = () => header.classList.toggle('is-scrolled', scrollY > 8);
+  const progress = document.querySelector<HTMLElement>('[data-progress]')!;
+  const onScroll = () => {
+    header.classList.toggle('is-scrolled', scrollY > 8);
+    const max = document.documentElement.scrollHeight - innerHeight;
+    progress.style.setProperty('--progress', String(max > 0 ? Math.min(1, scrollY / max) : 0));
+  };
   addEventListener('scroll', onScroll, { passive: true });
   onScroll();
 

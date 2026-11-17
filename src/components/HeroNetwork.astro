@@ -1,0 +1,209 @@
+---
+/**
+ * Fondo tecnológico del hero:
+ *  - retícula y foco que sigue al cursor → CSS (barato, lo compone la GPU)
+ *  - pulsos de datos que recorren la retícula → canvas, pausado fuera de pantalla
+ * Decorativo: aria-hidden. Con prefers-reduced-motion no hay pulsos ni seguimiento.
+ */
+---
+
+<div class="net" aria-hidden="true" data-net>
+  <div class="grid"></div>
+  <div class="spot"></div>
+  <canvas class="pulses" data-net-canvas></canvas>
+</div>
+
+<style>
+  .net {
+    --cell: 64px;
+    --line: color-mix(in srgb, var(--line) 60%, transparent);
+    position: absolute;
+    inset: 0;
+    z-index: -1;
+    overflow: hidden;
+    pointer-events: none;
+    mask-image: radial-gradient(ellipse 75% 70% at 65% 35%, #000 25%, transparent 78%);
+    -webkit-mask-image: radial-gradient(ellipse 75% 70% at 65% 35%, #000 25%, transparent 78%);
+  }
+  .grid,
+  .spot,
+  .pulses {
+    position: absolute;
+    inset: 0;
+    width: 100%;
+    height: 100%;
+  }
+  .grid,
+  .spot {
+    background-image:
+      linear-gradient(to right, var(--_c) 1px, transparent 1px),
+      linear-gradient(to bottom, var(--_c) 1px, transparent 1px);
+    background-size: var(--cell) var(--cell);
+  }
+  .grid {
+    --_c: var(--line);
+  }
+  .spot {
+    --_c: color-mix(in srgb, var(--accent) 70%, transparent);
+    mask-image: radial-gradient(240px circle at var(--sx, -999px) var(--sy, -999px), #000, transparent 75%);
+    -webkit-mask-image: radial-gradient(240px circle at var(--sx, -999px) var(--sy, -999px), #000, transparent 75%);
+    opacity: 0.9;
+  }
+</style>
+
+<script>
+  const net = document.querySelector<HTMLElement>('[data-net]');
+  const canvas = document.querySelector<HTMLCanvasElement>('[data-net-canvas]');
+  const reduce = matchMedia('(prefers-reduced-motion: reduce)').matches;
+
+  if (net && canvas && !reduce) {
+    const host = net.parentElement as HTMLElement;
+    const CELL = 64;
+    const MIN_X = 0.56; // fracción del ancho a partir de la cual pueden circular
+    const ctx = canvas.getContext('2d')!;
+    let w = 0;
+    let h = 0;
+    let dpr = 1;
+    let accent = '#6a2a85';
+    let running = false;
+    let raf = 0;
+    let last = 0;
+
+    // ---- Foco del cursor (solo variables CSS) ----
+    host.addEventListener(
+      'pointermove',
+      (e) => {
+        const r = host.getBoundingClientRect();
+        net.style.setProperty('--sx', `${e.clientX - r.left}px`);
+        net.style.setProperty('--sy', `${e.clientY - r.top}px`);
+      },
+      { passive: true },
+    );
+    host.addEventListener('pointerleave', () => {
+      net.style.setProperty('--sx', '-999px');
+      net.style.setProperty('--sy', '-999px');
+    });
+
+    // ---- Pulsos ----
+    type Pulse = { x: number; y: number; dx: number; dy: number; t: number; speed: number; life: number };
+    let pulses: Pulse[] = [];
+    const DIRS = [
+      [1, 0],
+      [-1, 0],
+      [0, 1],
+      [0, -1],
+    ];
+    const rand = (a: number, b: number) => a + Math.random() * (b - a);
+
+    const spawn = (): Pulse => {
+      const cols = Math.max(1, Math.floor(w / CELL));
+      const rows = Math.max(1, Math.floor(h / CELL));
+      // Solo en la zona del retrato (derecha): nunca cruzan el texto.
+      const x = Math.floor(rand(cols * 0.6, cols)) * CELL;
+      const y = Math.floor(rand(0, rows * 0.8)) * CELL;
+      const [dx, dy] = DIRS[Math.floor(Math.random() * 4)];
+      return { x, y, dx, dy, t: 0, speed: rand(70, 140), life: rand(4, 9) };
+    };
+
+    const readAccent = () => {
+      accent = getComputedStyle(document.documentElement).getPropertyValue('--accent').trim() || accent;
+    };
+
+    const resize = () => {
+      const r = host.getBoundingClientRect();
+      dpr = Math.min(window.devicePixelRatio || 1, 2);
+      w = r.width;
+      h = r.height;
+      canvas.width = Math.round(w * dpr);
+      canvas.height = Math.round(h * dpr);
+      ctx.setTransform(dpr, 0, 0, dpr, 0, 0);
+      // En una columna (mobile/tablet) el texto ocupa todo el ancho: sin pulsos.
+      const count = w < 1000 ? 0 : 9;
+      pulses = Array.from({ length: count }, spawn);
+    };
+
+    const step = (p: Pulse, dt: number) => {
+      p.t += (p.speed * dt) / CELL;
+      p.life -= dt;
+      while (p.t >= 1) {
+        p.t -= 1;
+        p.x += p.dx * CELL;
+        p.y += p.dy * CELL;
+        // En cada nodo: seguir recto (60 %) o girar, nunca volver.
+        if (Math.random() > 0.6) {
+          const options = DIRS.filter(([a, b]) => !(a === -p.dx && b === -p.dy) && !(a === p.dx && b === p.dy));
+          [p.dx, p.dy] = options[Math.floor(Math.random() * options.length)];
+        }
+      }
+      if (p.life <= 0 || p.x < w * MIN_X || p.y < -CELL || p.x > w + CELL || p.y > h + CELL) Object.assign(p, spawn());
+    };
+
+    const draw = (p: Pulse) => {
+      const hx = p.x + p.dx * p.t * CELL;
+      const hy = p.y + p.dy * p.t * CELL;
+      const trail = Math.min(CELL * 1.4, (p.t + 1) * CELL);
+      const tx = hx - p.dx * trail;
+      const ty = hy - p.dy * trail;
+      const fade = Math.min(1, p.life / 1.2);
+      const g = ctx.createLinearGradient(tx, ty, hx, hy);
+      g.addColorStop(0, 'transparent');
+      g.addColorStop(1, accent);
+      ctx.globalAlpha = 0.85 * fade;
+      ctx.strokeStyle = g;
+      ctx.lineWidth = 1.5;
+      ctx.beginPath();
+      ctx.moveTo(tx + 0.5, ty + 0.5);
+      ctx.lineTo(hx + 0.5, hy + 0.5);
+      ctx.stroke();
+      ctx.fillStyle = accent;
+      ctx.beginPath();
+      ctx.arc(hx + 0.5, hy + 0.5, 1.8, 0, Math.PI * 2);
+      ctx.fill();
+    };
+
+    const frame = (now: number) => {
+      const dt = Math.min(0.05, (now - last) / 1000 || 0);
+      last = now;
+      ctx.clearRect(0, 0, w, h);
+      for (const p of pulses) {
+        step(p, dt);
+        draw(p);
+      }
+      ctx.globalAlpha = 1;
+      raf = requestAnimationFrame(frame);
+    };
+
+    const start = () => {
+      if (running || pulses.length === 0) return;
+      running = true;
+      last = performance.now();
+      raf = requestAnimationFrame(frame);
+    };
+    const stop = () => {
+      running = false;
+      cancelAnimationFrame(raf);
+    };
+
+    readAccent();
+    resize();
+    new ResizeObserver(() => {
+      resize();
+      if (pulses.length === 0) {
+        stop();
+        ctx.clearRect(0, 0, w, h);
+      } else if (visible && !document.hidden) start();
+    }).observe(host);
+    new MutationObserver(readAccent).observe(document.documentElement, { attributes: true, attributeFilter: ['data-theme'] });
+
+    let visible = true;
+    new IntersectionObserver(([e]) => {
+      visible = e.isIntersecting;
+      visible && !document.hidden ? start() : stop();
+    }).observe(host);
+    document.addEventListener('visibilitychange', () => (visible && !document.hidden ? start() : stop()));
+
+    // Arrancar después del primer pintado para no competir con el LCP.
+    const kick = () => visible && start();
+    'requestIdleCallback' in window ? requestIdleCallback(kick, { timeout: 1200 }) : setTimeout(kick, 600);
+  }
+</script>

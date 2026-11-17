@@ -15,7 +15,7 @@ import { about } from '../data/profile';
 
     <ul class="strengths" aria-label="Lo que aporto">
       {about.strengths.map((s, i) => (
-        <li class="strength" data-reveal style={`--d:${i}`}>
+        <li class="strength" data-glow data-reveal style={`--d:${i}`}>
           <span class="num" aria-hidden="true">{String(i + 1).padStart(2, '0')}</span>
           <h3>{s.title}</h3>
           <p>{s.text}</p>

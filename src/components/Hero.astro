@@ -1,22 +1,31 @@
 ---
 import { Picture } from 'astro:assets';
 import Icon from './Icon.astro';
+import HeroNetwork from './HeroNetwork.astro';
 import portrait from '../assets/profile/esteban-molina-2026.jpg';
 import { person, pitch, highlights } from '../data/profile';
+
+const TYPER_WORDS = ['VTEX IO', 'Integraciones API', 'Automatización de procesos', 'IA aplicada al negocio'];
 ---
 
 <section id="inicio" class="hero" aria-labelledby="hero-title">
+  <HeroNetwork />
   <div class="container hero-grid">
     <div class="hero-copy">
       <p class="status" data-reveal>
         <span class="dot" aria-hidden="true"></span>
-        {person.location} · {person.modality}
+        <span>{person.location} · {person.modality}</span>
+        <span class="clock" aria-hidden="true" data-clock hidden></span>
       </p>
 
       <h1 id="hero-title" class="title" data-reveal style="--d:1">
         <span class="name">{person.name}</span>
-        <span class="role">{person.role}<span class="focus">{person.focus}</span></span>
+        <span class="role">{person.role}</span>
       </h1>
+      <p class="focus" data-reveal style="--d:1">
+        <span class="sr-only">{person.focus}</span>
+        <span class="prompt" aria-hidden="true"><span class="prompt-sign">&gt;</span> <span class="typed" data-typer data-words={JSON.stringify(TYPER_WORDS)}>{TYPER_WORDS[0]}</span><span class="caret"></span></span>
+      </p>
 
       <p class="headline" data-reveal style="--d:2">{pitch.headline}</p>
       <p class="summary" data-reveal style="--d:3">{pitch.summary}</p>
@@ -56,8 +65,8 @@ import { person, pitch, highlights } from '../data/profile';
         fetchpriority="high"
         quality={72}
       />
-      <figcaption class="badge">
-        <span class="badge-k">Actualmente</span>
+      <figcaption class="badge" data-glow>
+        <span class="badge-k">● actualmente</span>
         <span class="badge-v">Analista de Operaciones eCommerce · {person.currentEmployer}</span>
       </figcaption>
     </figure>
@@ -67,7 +76,7 @@ import { person, pitch, highlights } from '../data/profile';
     <ul class="facts" aria-label="De un vistazo">
       {highlights.map((h, i) => (
         <li class="fact" data-reveal style={`--d:${i}`}>
-          <strong class="fact-v">{h.value}</strong>
+          <strong class="fact-v" data-count>{h.value}</strong>
           <span class="fact-l">{h.label}</span>
         </li>
       ))}
@@ -80,18 +89,6 @@ import { person, pitch, highlights } from '../data/profile';
     position: relative;
     padding-block: clamp(2.5rem, 1.5rem + 5vw, 6rem) clamp(3rem, 2rem + 4vw, 5rem);
     isolation: isolate;
-  }
-  .hero::before {
-    /* Trama sutil: retícula editorial */
-    content: '';
-    position: absolute;
-    inset: 0;
-    z-index: -1;
-    background-image:
-      linear-gradient(to right, color-mix(in srgb, var(--line) 55%, transparent) 1px, transparent 1px),
-      linear-gradient(to bottom, color-mix(in srgb, var(--line) 55%, transparent) 1px, transparent 1px);
-    background-size: 64px 64px;
-    mask-image: radial-gradient(ellipse 70% 60% at 70% 30%, #000 20%, transparent 75%);
   }
   .hero-grid {
     display: grid;
@@ -107,9 +104,17 @@ import { person, pitch, highlights } from '../data/profile';
     border: 1px solid var(--line);
     border-radius: 999px;
     background: var(--surface);
-    font-size: var(--step--1);
+    font-family: var(--font-mono);
+    font-size: 0.74rem;
     font-weight: 500;
     color: var(--ink-2);
+    flex-wrap: wrap;
+  }
+  .clock {
+    padding-left: 0.6rem;
+    border-left: 1px solid var(--line);
+    color: var(--accent);
+    font-variant-numeric: tabular-nums;
   }
   .dot {
     width: 0.5rem;
@@ -153,9 +158,19 @@ import { person, pitch, highlights } from '../data/profile';
   }
   .focus {
     display: block;
-    margin-top: 0.15rem;
-    font-size: 0.72em;
-    color: var(--ink-3);
+    margin-top: 0.5rem;
+    height: 1.6em;
+    overflow: hidden;
+    white-space: nowrap;
+    contain: layout paint style;
+    font-family: var(--font-mono);
+    font-size: clamp(0.95rem, 0.85rem + 0.4vw, 1.15rem);
+    font-weight: 500;
+    letter-spacing: -0.01em;
+    color: var(--ink-2);
+  }
+  .prompt-sign {
+    color: var(--accent);
   }
   .headline {
     margin-top: 1.6rem;
@@ -241,10 +256,10 @@ import { person, pitch, highlights } from '../data/profile';
   }
   .badge-k {
     color: var(--accent);
-    font-weight: 600;
-    text-transform: uppercase;
-    letter-spacing: 0.06em;
-    font-size: 0.72rem;
+    font-family: var(--font-mono);
+    font-weight: 500;
+    letter-spacing: 0.02em;
+    font-size: 0.7rem;
   }
   .badge-v {
     font-weight: 600;
@@ -269,6 +284,8 @@ import { person, pitch, highlights } from '../data/profile';
     border-left: 1px solid var(--line);
   }
   .fact-v {
+    contain: layout style;
+    font-variant-numeric: tabular-nums;
     font-family: var(--font-display);
     font-size: var(--step-3);
     font-weight: 700;
@@ -277,8 +294,9 @@ import { person, pitch, highlights } from '../data/profile';
   }
   .fact-l {
     color: var(--ink-2);
-    font-size: var(--step--1);
-    line-height: 1.4;
+    font-family: var(--font-mono);
+    font-size: 0.74rem;
+    line-height: 1.5;
   }
 
   @media (max-width: 860px) {
@@ -320,6 +338,25 @@ import { person, pitch, highlights } from '../data/profile';
       margin-top: 1.25rem;
     }
   }
+  @media (max-width: 640px) {
+    .status {
+      display: grid;
+      grid-template-columns: auto 1fr;
+      align-items: start;
+      gap: 0.15rem 0.55rem;
+      padding: 0.55rem 0.85rem;
+      border-radius: var(--radius);
+      line-height: 1.5;
+    }
+    .dot {
+      margin-top: 0.42em;
+    }
+    .clock {
+      grid-column: 2;
+      padding-left: 0;
+      border-left: 0;
+    }
+  }
   @media (max-width: 520px) {
     .badge {
       display: none;
@@ -329,3 +366,79 @@ import { person, pitch, highlights } from '../data/profile';
     }
   }
 </style>
+
+<script>
+  const reduce = matchMedia('(prefers-reduced-motion: reduce)').matches;
+
+  // ---- Reloj en vivo (hora de Tucumán) ----
+  const clock = document.querySelector<HTMLElement>('[data-clock]');
+  if (clock) {
+    const fmt = new Intl.DateTimeFormat('es-AR', {
+      hour: '2-digit',
+      minute: '2-digit',
+      hour12: false,
+      timeZone: 'America/Argentina/Tucuman',
+    });
+    const tick = () => (clock.textContent = `${fmt.format(new Date())} UTC−3`);
+    tick();
+    clock.hidden = false;
+    setInterval(tick, 15000);
+  }
+
+  // ---- Línea de terminal que escribe ----
+  const typer = document.querySelector<HTMLElement>('[data-typer]');
+  if (typer && !reduce) {
+    const words: string[] = JSON.parse(typer.dataset.words || '[]');
+    let i = 0;
+    const wait = (ms: number) => new Promise((r) => setTimeout(r, ms));
+    const run = async () => {
+      await wait(2600);
+      for (;;) {
+        const current = words[i];
+        for (let n = current.length; n >= 0; n--) {
+          typer.textContent = current.slice(0, n);
+          await wait(28);
+        }
+        i = (i + 1) % words.length;
+        const next = words[i];
+        await wait(260);
+        for (let n = 1; n <= next.length; n++) {
+          typer.textContent = next.slice(0, n);
+          await wait(55 + Math.random() * 45);
+        }
+        await wait(2400);
+      }
+    };
+    run();
+  }
+
+  // ---- Contadores ----
+  const counters = document.querySelectorAll<HTMLElement>('[data-count]');
+  if (!reduce && 'IntersectionObserver' in window) {
+    const io = new IntersectionObserver(
+      (entries) => {
+        for (const e of entries) {
+          if (!e.isIntersecting) continue;
+          io.unobserve(e.target);
+          const el = e.target as HTMLElement;
+          const m = (el.textContent || '').match(/^(\D*)(\d+)(.*)$/);
+          if (!m) continue;
+          const [, pre, num, post] = m;
+          const target = Number(num);
+          const t0 = performance.now();
+          const dur = 1100;
+          el.style.minWidth = `${el.offsetWidth}px`;
+          const frame = (now: number) => {
+            const p = Math.min(1, (now - t0) / dur);
+            const eased = 1 - Math.pow(1 - p, 3);
+            el.textContent = `${pre}${Math.round(target * eased)}${post}`;
+            if (p < 1) requestAnimationFrame(frame);
+          };
+          requestAnimationFrame(frame);
+        }
+      },
+      { threshold: 0.6 },
+    );
+    counters.forEach((c) => io.observe(c));
+  }
+</script>

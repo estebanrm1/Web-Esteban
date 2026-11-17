@@ -23,6 +23,7 @@
   /* Tipografía */
   --font-display: 'Bricolage Grotesque Variable', 'Segoe UI', system-ui, sans-serif;
   --font-body: 'Inter Tight Variable', 'Segoe UI', system-ui, sans-serif;
+  --font-mono: 'JetBrains Mono Variable', ui-monospace, 'Cascadia Code', Consolas, monospace;
   --step--1: clamp(0.83rem, 0.8rem + 0.15vw, 0.9rem);
   --step-0: clamp(1rem, 0.96rem + 0.2vw, 1.0625rem);
   --step-1: clamp(1.2rem, 1.1rem + 0.45vw, 1.4rem);
@@ -175,20 +176,23 @@ a {
   max-width: 46rem;
 }
 .eyebrow {
+  contain: layout style;
   display: inline-flex;
   align-items: center;
   gap: 0.6rem;
-  font-size: var(--step--1);
-  font-weight: 600;
-  letter-spacing: 0.08em;
-  text-transform: uppercase;
+  font-family: var(--font-mono);
+  font-size: 0.8rem;
+  font-weight: 500;
+  letter-spacing: 0.04em;
+  text-transform: lowercase;
   color: var(--accent);
 }
 .eyebrow::before {
-  content: '';
-  width: 1.75rem;
-  height: 1px;
-  background: currentColor;
+  content: '//';
+  opacity: 0.55;
+}
+.mono {
+  font-family: var(--font-mono);
 }
 .section-title {
   font-size: var(--step-3);
@@ -255,7 +259,9 @@ a {
   padding: 0;
 }
 .tag {
-  font-size: var(--step--1);
+  font-family: var(--font-mono);
+  font-size: 0.76rem;
+  letter-spacing: -0.01em;
   padding: 0.2rem 0.65rem;
   border-radius: 999px;
   border: 1px solid var(--line);
@@ -277,5 +283,69 @@ a {
   .js [data-reveal].is-visible {
     opacity: 1;
     transform: none;
+  }
+}
+
+/* ---------- Capa tecnológica ---------- */
+
+/* Brillo que sigue al cursor en tarjetas (las variables las fija un único listener) */
+[data-glow] {
+  position: relative;
+  isolation: isolate;
+}
+[data-glow]::after {
+  content: '';
+  position: absolute;
+  inset: -1px;
+  z-index: -1;
+  border-radius: inherit;
+  padding: 1px;
+  background: radial-gradient(
+    260px circle at var(--mx, 50%) var(--my, 50%),
+    color-mix(in srgb, var(--accent) 85%, transparent),
+    transparent 70%
+  );
+  -webkit-mask:
+    linear-gradient(#000 0 0) content-box,
+    linear-gradient(#000 0 0);
+  -webkit-mask-composite: xor;
+  mask-composite: exclude;
+  opacity: 0;
+  transition: opacity 0.35s var(--ease);
+  pointer-events: none;
+}
+[data-glow]:hover::after {
+  opacity: 1;
+}
+
+/* Barra de progreso de lectura */
+.progress {
+  position: fixed;
+  inset: 0 0 auto 0;
+  height: 2px;
+  z-index: 60;
+  background: linear-gradient(90deg, var(--accent), color-mix(in srgb, var(--accent) 40%, var(--signal)));
+  transform-origin: 0 50%;
+  transform: scaleX(var(--progress, 0));
+  pointer-events: none;
+}
+
+/* Cursor de terminal */
+.caret {
+  display: inline-block;
+  width: 0.55em;
+  height: 1.05em;
+  margin-left: 0.12em;
+  vertical-align: -0.15em;
+  background: var(--accent);
+}
+@media (prefers-reduced-motion: no-preference) {
+  .caret {
+    animation: blink 1.05s steps(1) infinite;
+  }
+}
+@keyframes blink {
+  50% {
+    opacity: 0;
   }
 }
