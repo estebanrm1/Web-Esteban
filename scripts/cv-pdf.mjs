@@ -22,7 +22,8 @@ try {
   const self = await browser.newPage({ viewport: { width: 1440, height: 900 }, colorScheme: 'light' });
   await self.goto(`http://localhost:${PORT}/`, { waitUntil: 'networkidle' });
   await self.evaluate(() => document.querySelectorAll('[data-reveal]').forEach((e) => e.classList.add('is-visible')));
-  await self.waitForTimeout(900);
+  // Esperar a que terminen los contadores animados (duran 1,1 s): la captura no debe mostrar cifras intermedias.
+  await self.waitForTimeout(3000);
   await self.screenshot({ path: 'src/assets/projects/este-portfolio.png' });
   console.log('✓ src/assets/projects/este-portfolio.png');
 

@@ -30,7 +30,6 @@ const jsonLd = {
       image: new URL('/esteban-molina.jpg', site.url).href,
       email: `mailto:${person.email}`,
       address: { '@type': 'PostalAddress', addressRegion: 'Tucumán',addressCountry: 'AR' },
-      worksFor: { '@type': 'Organization', name: person.currentEmployer },
       knowsLanguage: ['es', 'en'],
       sameAs: [person.linkedin, person.github],
       knowsAbout: skills.flatMap((s) => s.items),

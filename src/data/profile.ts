@@ -38,19 +38,20 @@ export const person = {
   linkedinHandle: 'in/esteban-molina-dev',
   github: 'https://github.com/estebanrm1',
   cvPdf: '/cv/esteban-molina-cv.pdf',
-  currentEmployer: 'Yuhmak S.A.',
+  /** Empleador actual descripto de forma genérica (sin nombre por confidencialidad). */
+  currentEmployer: 'Retail multisucursal',
 };
 
 /** Propuesta de valor (hero). */
 export const pitch = {
   headline: 'Traduzco necesidades de negocio en soluciones eCommerce concretas.',
   summary:
-    'Perfil híbrido técnico-operativo: en Yuhmak soy el referente técnico interno de VTEX IO. Desarrollo integraciones API, diseño herramientas web a medida y automatizo procesos con IA, reduciendo costos de desarrollo externo. Formación full stack MERN y más de 10 años gestionando operaciones.',
+    'Perfil híbrido técnico-operativo: en una empresa de retail multisucursal soy el referente técnico interno de VTEX IO. Desarrollo integraciones API, diseño herramientas web a medida y automatizo procesos con IA, reduciendo costos de desarrollo externo. Formación full stack MERN y más de 10 años gestionando operaciones.',
 };
 
 /** Datos de un vistazo para reclutadores. */
 export const highlights = [
-  { value: 'VTEX IO', label: 'referente técnico interno en Yuhmak S.A.' },
+  { value: 'VTEX IO', label: 'referente técnico interno en una empresa de retail' },
   { value: '+10 años', label: 'de experiencia en gestión de operaciones y equipos' },
   { value: '11', label: 'sucursales en el esquema multidepósito que diseñé' },
   { value: '327 h', label: 'de formación en Oracle Next Education' },
@@ -65,7 +66,7 @@ export const about = {
   strengths: [
     {
       title: 'eCommerce y VTEX',
-      text: 'VTEX IO, API, catálogo, promociones, checkout y medios de pago. Gestión técnica diaria con el partner oficial.',
+      text: 'VTEX IO, API, catálogo, promociones, checkout y medios de pago. Gestión técnica diaria con el partner de implementación.',
     },
     {
       title: 'Integración y automatización',
@@ -91,15 +92,15 @@ export type Role = {
 export const experience: Role[] = [
   {
     title: 'Analista de Operaciones eCommerce',
-    company: 'Yuhmak S.A.',
+    company: 'Empresa de retail multisucursal',
     period: '2024 — Presente',
     start: '2024',
     points: [
-      'Referente técnico interno de VTEX IO: gestiono la relación diaria con el partner oficial, evalúo propuestas técnicas y ejecuto desarrollos directos, reduciendo horas facturadas a terceros.',
+      'Referente técnico interno de VTEX IO: gestiono la relación diaria con el partner de implementación, evalúo propuestas técnicas y ejecuto desarrollos directos, reduciendo horas facturadas a terceros.',
       'Scripts en Python para migración masiva de catálogo vía VTEX API: árbol de categorías, marcas y mapeo de taxonomía de Google, automatizando operaciones antes manuales o tercerizadas.',
       'Diseñé y desarrollé el Hot Sale Command Center (Next.js 15 + TypeScript + Supabase), que centralizó la gestión del evento comercial más importante del año y reemplazó un flujo manual en múltiples hojas de cálculo.',
-      'Arquitecturé el esquema multidepósito de 11 sucursales para la nueva cuenta VTEX de la división Hogar, documentando la lógica de inventario y envío para la migración.',
-      'Investigué e integré procesadores de pago (Payway, Getnet, MODO/Fiserv): evaluación técnica, compatibilidad con VTEX y recomendación de rutas de implementación.',
+      'Arquitecturé el esquema multidepósito de 11 sucursales para la nueva cuenta VTEX de una unidad de negocio, documentando la lógica de inventario y envío para la migración.',
+      'Investigué e integré múltiples procesadores de pago locales: evaluación técnica, compatibilidad con VTEX y recomendación de rutas de implementación.',
       'Implementé soluciones con Claude API (Anthropic) para automatizar tareas operativas, como la detección de nombres de locales en reseñas y la generación de respuestas.',
       'Diagnostiqué y resolví un bug crítico de rendering en el storefront (conflicto FedCM/Chrome) que afectaba el inicio de sesión con Google.',
     ],
@@ -131,16 +132,16 @@ export const experience: Role[] = [
 export const caseStudies = [
   {
     title: 'Hot Sale Command Center',
-    context: 'Aplicación web interna · Yuhmak S.A.',
+    context: 'Aplicación web interna · Retail',
     problem: 'La gestión del Hot Sale dependía de un flujo manual repartido en múltiples hojas de cálculo.',
     solution:
-      'Aplicación web que centraliza la operación del evento integrando datos de SAP Business One y VTEX API en tiempo real.',
+      'Aplicación web que centraliza la operación del evento integrando datos del ERP de la empresa y VTEX API en tiempo real.',
     stack: ['Next.js 15', 'TypeScript', 'Tailwind', 'Supabase', 'Drizzle ORM', 'TanStack Query'],
   },
   {
-    title: 'Migración Yuhmak Hogar a VTEX',
-    context: 'Liderazgo técnico · Yuhmak S.A.',
-    problem: 'Separar la división Hogar en su propia cuenta VTEX sin perder catálogo ni lógica de inventario.',
+    title: 'Migración de una unidad de negocio a VTEX',
+    context: 'Liderazgo técnico · Retail',
+    problem: 'Separar una unidad de negocio en su propia cuenta VTEX sin perder catálogo ni lógica de inventario.',
     solution:
       'Análisis de storefront, configuración de catálogo vía API y diseño de un esquema multidepósito para 11 sucursales.',
     stack: ['VTEX API', 'Python', 'Inventario multidepósito'],
