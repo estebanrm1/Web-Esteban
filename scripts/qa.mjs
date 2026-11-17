@@ -24,6 +24,23 @@ const stopPreview = await startPreview(PORT);
 
 const browser = await chromium.launch({ executablePath: chromePath });
 
+// `astro preview` no aplica las cabeceras de netlify.toml: inyectamos la misma CSP en los
+// documentos para detectar localmente lo que el navegador bloquearía en producción.
+const CSP = readFileSync('netlify.toml', 'utf8').match(/Content-Security-Policy = "([^"]+)"/)?.[1];
+const newContext = async (opts) => {
+  const ctx = await browser.newContext(opts);
+  if (CSP) {
+    await ctx.route(`${BASE}/**`, async (route) => {
+      if (route.request().resourceType() !== 'document') return route.continue();
+      const res = await route.fetch();
+      await route.fulfill({ response: res, headers: { ...res.headers(), 'content-security-policy': CSP } });
+    });
+  }
+  return ctx;
+};
+if (CSP) ok('CSP de netlify.toml aplicada a las pruebas');
+else fail('no se encontró la CSP en netlify.toml');
+
 async function audit(page, label) {
   await page.addScriptTag({ content: axeSource });
   const res = await page.evaluate(() =>
@@ -42,7 +59,7 @@ try {
     ]) {
       const label = `${vp.name}-${scheme}`;
       console.log(`\n▶ ${label}`);
-      const ctx = await browser.newContext({ viewport: vp, colorScheme: scheme, deviceScaleFactor: 1 });
+      const ctx = await newContext({ viewport: vp, colorScheme: scheme, deviceScaleFactor: 1 });
       const page = await ctx.newPage();
       const errors = [];
       page.on('console', (m) => m.type() === 'error' && errors.push(m.text()));
@@ -105,7 +122,7 @@ try {
 
   // ---- Interacciones ----
   console.log('\n▶ interacciones');
-  const ctx = await browser.newContext({ viewport: { width: 1280, height: 860 } });
+  const ctx = await newContext({ viewport: { width: 1280, height: 860 } });
   const page = await ctx.newPage();
   await page.goto(BASE + '/', { waitUntil: 'networkidle' });
 
