@@ -148,47 +148,21 @@ try {
   await page.keyboard.press('Escape');
   !(await page.evaluate(() => document.querySelector('[data-cert-dialog]').open)) ? ok('visor cierra con Escape') : fail('visor no cierra');
 
-  // Formulario: validación
+  // Contacto: WhatsApp con mensaje prellenado y sin formulario
   await page.locator('#contacto').scrollIntoViewIfNeeded();
-  await page.click('[data-submit]');
-  const invalid = await page.locator('[aria-invalid="true"]').count();
-  const focused = await page.evaluate(() => document.activeElement?.id);
-  invalid === 4 && focused === 'c-name' ? ok('validación: 4 errores y foco en el primero') : fail(`validación: ${invalid} inválidos, foco ${focused}`);
-  await page.fill('#c-email', 'no-es-email');
-  await page.locator('#c-email').blur();
-  const emailErr = await page.textContent('[data-error-for="c-email"]');
-  emailErr.includes('válido') ? ok('validación de formato de email') : fail('sin error de formato de email');
-  await page.screenshot({ path: `${OUT}/form-errores.png` });
+  const wa = await page.locator('#contacto a[href*="wa.me"]').first().getAttribute('href');
+  const waUrl = new URL(wa);
+  waUrl.pathname === '/543812157708' && (waUrl.searchParams.get('text') || '').length > 10
+    ? ok(`WhatsApp con mensaje prellenado: "${waUrl.searchParams.get('text')}"`)
+    : fail(`enlace de WhatsApp inválido: ${wa}`);
+  (await page.locator('#contacto form').count()) === 0 ? ok('sin formulario en contacto') : fail('el formulario sigue presente');
+  await page.locator('#contacto').screenshot({ path: `${OUT}/contacto.png` });
 
-  // Formulario: envío exitoso (API simulada) y payload correcto
-  let payload = null;
-  await page.route('https://api.emailjs.com/**', async (route) => {
-    payload = JSON.parse(route.request().postData() || '{}');
-    await route.fulfill({ status: 200, body: 'OK' });
-  });
-  await page.fill('#c-name', 'QA Test');
-  await page.fill('#c-email', 'qa@example.com');
-  await page.fill('#c-subject', 'Prueba');
-  await page.fill('#c-message', 'Mensaje de prueba automatizada.');
-  await page.click('[data-submit]');
-  await page.waitForSelector('.form-status.ok', { timeout: 10000 }).catch(() => {});
-  const okText = await page.textContent('[data-form-status]');
-  const p = payload?.template_params;
-  okText?.includes('enviado') && p?.user_subjet === 'Prueba' && payload.service_id === 'service_kc6u0yd'
-    ? ok('envío OK: mensaje de éxito y payload con campos del template')
-    : fail(`envío: "${okText}" payload=${JSON.stringify(payload)}`);
-  await page.screenshot({ path: `${OUT}/form-ok.png` });
-
-  // Formulario: fallo de API
-  await page.unroute('https://api.emailjs.com/**');
-  await page.route('https://api.emailjs.com/**', (r) => r.fulfill({ status: 500, body: 'error' }));
-  await page.fill('#c-name', 'QA');
-  await page.fill('#c-email', 'qa@example.com');
-  await page.fill('#c-subject', 'x');
-  await page.fill('#c-message', 'Mensaje de prueba 2.');
-  await page.click('[data-submit]');
-  await page.waitForSelector('.form-status.fail', { timeout: 10000 }).catch(() => {});
-  (await page.textContent('[data-form-status]'))?.includes('No se pudo') ? ok('error de API informado al usuario') : fail('error de API no informado');
+  // Copiar email
+  await ctx.grantPermissions(['clipboard-read', 'clipboard-write']);
+  await page.click('[data-copy]');
+  const clip = await page.evaluate(() => navigator.clipboard.readText());
+  clip === 'emolinatuc@gmail.com' ? ok('botón copiar email funciona') : fail(`copiar email: "${clip}"`);
 
   // ---- Enlaces ----
   console.log('\n▶ enlaces');

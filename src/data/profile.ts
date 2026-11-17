@@ -33,6 +33,7 @@ export const person = {
   email: 'emolinatuc@gmail.com',
   phoneDisplay: '+54 381 215-7708',
   whatsapp: 'https://wa.me/543812157708',
+  whatsappMessage: 'Hola Esteban, vi tu portfolio y me gustaría hablar con vos sobre una oportunidad.',
   linkedin: 'https://www.linkedin.com/in/esteban-molina-dev/',
   linkedinHandle: 'in/esteban-molina-dev',
   github: 'https://github.com/estebanrm1',

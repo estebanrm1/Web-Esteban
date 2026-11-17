@@ -7,7 +7,7 @@ En producción: https://esteban-molina-cv.netlify.app
 
 - **[Astro](https://astro.build)**: sitio estático, sin JavaScript por defecto, optimización de imágenes (AVIF/WebP) en el build.
 - **CSS propio** con tokens de diseño, modo claro/oscuro y `prefers-reduced-motion`.
-- **EmailJS** para el formulario (se carga solo al enviar).
+- Contacto directo por **WhatsApp** (`wa.me` con mensaje prellenado), email y LinkedIn: sin formularios ni servicios de terceros.
 - Tipografías autoalojadas: Bricolage Grotesque e Inter Tight (`@fontsource-variable`).
 - `@astrojs/sitemap`, JSON-LD (`Person`), Open Graph y Twitter Cards.
 
@@ -35,7 +35,7 @@ scripts/               ← generación de assets y QA automatizado
 | `npm run check`        | Chequeo de tipos                                                        |
 | `npm run assets:cv`    | Regenera el **CV en PDF**, `og.png` y la captura propia (requiere build) |
 | `npm run assets:shots` | Regenera las capturas de los proyectos desde los sitios en vivo         |
-| `npm run qa`           | QA end-to-end: axe (WCAG 2.2 AA), consola, responsive, enlaces, formulario |
+| `npm run qa`           | QA end-to-end: axe (WCAG 2.2 AA), CSP, consola, responsive, enlaces, contacto |
 
 Los scripts usan el Chrome/Edge instalado (`playwright-core`, sin descargar navegadores). Si no se encuentra, definí `CHROME_PATH`.
 
