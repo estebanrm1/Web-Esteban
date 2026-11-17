@@ -113,6 +113,20 @@ try {
         await page.screenshot({ path: `${OUT}/${label}-menu.png` });
         await page.keyboard.press('Escape');
         (await toggle.getAttribute('aria-expanded')) === 'false' ? ok('menú cierra con Escape') : fail('menú no cierra');
+
+        // Visor de certificados centrado en pantalla
+        await page.locator('[data-cert-open]').first().scrollIntoViewIfNeeded();
+        await page.locator('[data-cert-open]').first().click();
+        await page.waitForFunction(() => document.querySelector('[data-cert-img]').complete);
+        const r = await page.evaluate(() => {
+          const b = document.querySelector('[data-cert-dialog]').getBoundingClientRect();
+          return { top: b.top, bottom: innerHeight - b.bottom, left: b.left, right: innerWidth - b.right };
+        });
+        Math.abs(r.top - r.bottom) <= 2 && Math.abs(r.left - r.right) <= 2
+          ? ok(`visor centrado (márgenes ${Math.round(r.top)}/${Math.round(r.bottom)} px)`)
+          : fail(`visor descentrado: ${JSON.stringify(r)}`);
+        await page.screenshot({ path: `${OUT}/${label}-visor.png` });
+        await page.keyboard.press('Escape');
       }
 
       errors.length ? fail(`errores de consola: ${errors.join(' | ')}`) : ok('sin errores de consola');

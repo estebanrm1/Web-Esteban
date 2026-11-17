@@ -241,7 +241,9 @@ const full = await Promise.all(
   }
 
   .viewer {
-    width: min(96vw, 1100px);
+    /* El reset global (* { margin: 0 }) anula el margin:auto que centra el <dialog> */
+    margin: auto;
+    width: min(calc(100vw - 2rem), 1100px);
     max-height: 92dvh;
     padding: 0;
     border: 0;
@@ -312,9 +314,12 @@ const full = await Promise.all(
       img.alt = `Certificado: ${btn.dataset.title}`;
       title.textContent = btn.dataset.title!;
       dialog.showModal();
+      document.documentElement.style.overflow = 'hidden';
     });
   });
   dialog.querySelector('[data-cert-close]')!.addEventListener('click', () => dialog.close());
+  // Se libera el scroll al cerrar por cualquier vía (botón, Escape o clic fuera).
+  dialog.addEventListener('close', () => (document.documentElement.style.overflow = ''));
   // Cerrar al hacer clic fuera del contenido.
   dialog.addEventListener('click', (e) => {
     if (e.target === dialog) dialog.close();
