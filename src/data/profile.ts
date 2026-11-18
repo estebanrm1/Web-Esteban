@@ -5,8 +5,6 @@
  */
 import type { ImageMetadata } from 'astro';
 import enlaceShot from '../assets/projects/enlace-ar.png';
-import rinconShot from '../assets/projects/rincon-gourmet.png';
-import chefShot from '../assets/projects/portfolio-chef.png';
 import portfolioShot from '../assets/projects/este-portfolio.png';
 import certRolling from '../assets/certificates/rolling-code-fullstack.png';
 import certProgWeb from '../assets/certificates/programacion-web.png';
@@ -180,26 +178,6 @@ export const projects: Project[] = [
     demo: 'https://enlace-ar.netlify.app/',
     image: enlaceShot,
     imageAlt: 'Captura del sitio Enlace AR: portada con el lema «Primero entendemos tu negocio. Después elegimos la tecnología.» y un diagrama de herramientas conectadas.',
-  },
-  {
-    slug: 'rincon-gourmet',
-    title: 'Rincón Gourmet',
-    kind: 'Sitio para restaurante',
-    description: 'Sitio para un restaurante: carta, reservas y contacto, horarios y búsqueda de personal, con un diseño elegante.',
-    stack: ['HTML', 'CSS', 'Bootstrap', 'JavaScript'],
-    demo: 'https://demo-pagina-web.netlify.app/',
-    image: rinconShot,
-    imageAlt: 'Captura del sitio Rincón Gourmet: portada con navegación y fotografía de un salón.',
-  },
-  {
-    slug: 'portfolio-chef',
-    title: 'Portfolio Chef',
-    kind: 'CV online',
-    description: 'CV online para un chef, optimizado para SEO y con formulario de contacto funcional mediante EmailJS.',
-    stack: ['HTML', 'CSS', 'Bootstrap', 'JavaScript', 'EmailJS'],
-    demo: 'https://am-solucionesweb.github.io/portfoliocv/',
-    image: chefShot,
-    imageAlt: 'Captura del Portfolio Chef: portada con un plato de sushi y botón «Contáctame».',
   },
   {
     slug: 'este-portfolio',

@@ -1,11 +1,9 @@
-// Genera capturas reales de las demos publicadas → src/assets/projects/*.png
+// Genera capturas reales de los sitios publicados → src/assets/projects/*.png
 import { chromium } from 'playwright-core';
 import { chromePath } from './chrome.mjs';
 
 const targets = [
-  { name: 'portfolio-chef', url: 'https://am-solucionesweb.github.io/portfoliocv/' },
   { name: 'enlace-ar', url: 'https://enlace-ar.netlify.app/' },
-  { name: 'rincon-gourmet', url: 'https://demo-pagina-web.netlify.app/' },
 ];
 
 const browser = await chromium.launch({ executablePath: chromePath });
