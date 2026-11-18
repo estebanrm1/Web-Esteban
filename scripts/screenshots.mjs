@@ -4,7 +4,7 @@ import { chromePath } from './chrome.mjs';
 
 const targets = [
   { name: 'portfolio-chef', url: 'https://am-solucionesweb.github.io/portfoliocv/' },
-  { name: 'am-soluciones-web', url: 'https://am-soluciones-web.netlify.app/', enter: 'text=INGRESAR' },
+  { name: 'enlace-ar', url: 'https://enlace-ar.netlify.app/' },
   { name: 'rincon-gourmet', url: 'https://demo-pagina-web.netlify.app/' },
 ];
 

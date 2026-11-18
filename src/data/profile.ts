@@ -4,7 +4,7 @@
  * Editá este archivo para actualizar el portfolio: los componentes no contienen texto de perfil.
  */
 import type { ImageMetadata } from 'astro';
-import amShot from '../assets/projects/am-soluciones-web.png';
+import enlaceShot from '../assets/projects/enlace-ar.png';
 import rinconShot from '../assets/projects/rincon-gourmet.png';
 import chefShot from '../assets/projects/portfolio-chef.png';
 import portfolioShot from '../assets/projects/este-portfolio.png';
@@ -106,13 +106,14 @@ export const experience: Role[] = [
     ],
   },
   {
-    title: 'Desarrollador Web (Freelance)',
-    company: 'A.M Soluciones Web',
+    title: 'Cofundador · Soluciones tecnológicas',
+    company: 'Enlace AR',
     period: '2023 — Presente',
     start: '2023',
     points: [
       'Desarrollo de sitios web a medida con HTML, CSS, JavaScript y React para clientes de distintos rubros.',
       'Consultoría técnica para pequeñas empresas en plataformas digitales y optimización de su presencia online.',
+      'Diseño de soluciones de automatización, integración de sistemas e IA aplicada para negocios y profesionales.',
     ],
   },
   {
@@ -171,14 +172,14 @@ export type Project = {
 /** Sitios publicados (freelance y personales). */
 export const projects: Project[] = [
   {
-    slug: 'am-soluciones-web',
-    title: 'A.M Soluciones Web',
+    slug: 'enlace-ar',
+    title: 'Enlace AR',
     kind: 'Emprendimiento propio',
-    description: 'Sitio de mi emprendimiento de desarrollo web, construido con React, Bootstrap y múltiples librerías.',
-    stack: ['React', 'Bootstrap', 'JavaScript'],
-    demo: 'https://am-soluciones-web.netlify.app/',
-    image: amShot,
-    imageAlt: 'Captura del sitio A.M Soluciones Web: portada con el lema «Creamos tu web».',
+    description: 'Sitio de mi emprendimiento de soluciones tecnológicas: diseño propio, formulario de diagnóstico con Netlify Forms, SEO técnico y accesibilidad AA.',
+    stack: ['Astro', 'TypeScript', 'CSS', 'Netlify Forms'],
+    demo: 'https://enlace-ar.netlify.app/',
+    image: enlaceShot,
+    imageAlt: 'Captura del sitio Enlace AR: portada con el lema «Primero entendemos tu negocio. Después elegimos la tecnología.» y un diagrama de herramientas conectadas.',
   },
   {
     slug: 'rincon-gourmet',
